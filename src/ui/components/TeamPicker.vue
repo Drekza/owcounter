@@ -125,7 +125,7 @@ const ownPickedIds = computed(() =>
       </button>
     </div>
 
-    <div class="grid grid-cols-5 gap-3">
+    <div class="flex flex-wrap gap-2">
       <SlotChip
         v-for="(slot, i) in slots"
         :key="i"

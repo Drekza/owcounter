@@ -24,7 +24,25 @@ const {
   suggestions,
   reasonings,
   isComputing,
+  resetAll,
 } = useAppState();
+
+const hasAnyData = computed(
+  () =>
+    myPickIds.value.length > 0 ||
+    [enemy.value.tank, ...enemy.value.dps, ...enemy.value.support].some(Boolean) ||
+    bans.value.length > 0 ||
+    mapCtx.value.enabled ||
+    mapCtx.value.mapId !== null,
+);
+
+function handleResetAll() {
+  if (!hasAnyData.value) return;
+  if (typeof window !== 'undefined' && !window.confirm('Reset all picks, bans, and map?')) {
+    return;
+  }
+  resetAll();
+}
 
 const EMPTY_COMP: Comp = {
   tank: '',
@@ -76,6 +94,15 @@ const updatedLabel = computed(() => (updated ? `Updated ${updated}` : 'Updated â
         v-model:bans="bans"
         v-model:map-ctx="mapCtx"
       />
+      <button
+        type="button"
+        class="px-3 py-1.5 text-xs uppercase tracking-wider rounded-md border border-red-500/50 text-red-200 hover:bg-red-600/30 hover:border-red-400 disabled:opacity-40 disabled:cursor-not-allowed transition focus:outline-none focus:ring-2 focus:ring-ow-orange"
+        :disabled="!hasAnyData"
+        :title="hasAnyData ? 'Clear picks, bans, and map' : 'Nothing to reset'"
+        @click="handleResetAll"
+      >
+        Reset all
+      </button>
     </template>
   </Header>
 

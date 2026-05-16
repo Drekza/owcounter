@@ -47,7 +47,7 @@ function onClick() {
     :aria-label="hero.name"
     :aria-pressed="selected || false"
     :disabled="disabled"
-    class="group relative w-12 h-12 rounded-md overflow-hidden border-2 transition-transform"
+    class="group relative w-20 h-20 rounded-md overflow-hidden border-2 transition-transform"
     :class="[
       roleBorder[hero.role],
       disabled
@@ -67,7 +67,7 @@ function onClick() {
     />
     <div
       v-else
-      class="w-full h-full flex items-center justify-center text-[11px] font-semibold text-slate-100"
+      class="w-full h-full flex items-center justify-center text-base font-semibold text-slate-100"
       :class="roleBg[hero.role]"
     >
       {{ initials }}
@@ -75,7 +75,7 @@ function onClick() {
 
     <span
       v-if="selected"
-      class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-ow-orange text-slate-900 text-[10px] font-bold flex items-center justify-center shadow"
+      class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-ow-orange text-slate-900 text-xs font-bold flex items-center justify-center shadow"
       aria-hidden="true"
     >
       &check;

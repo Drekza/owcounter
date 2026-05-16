@@ -111,6 +111,13 @@ export function useAppState() {
 
   watch([enemyComp, ctx, locked], scheduleCompute, { deep: true });
 
+  function resetAll() {
+    enemy.value = { tank: null, dps: [null, null], support: [null, null] };
+    myPicks.value = { tank: null, dps: [null, null], support: [null, null] };
+    bans.value = [];
+    mapCtx.value = { enabled: false, mapId: null };
+  }
+
   return {
     enemy,
     myPicks,
@@ -125,5 +132,6 @@ export function useAppState() {
     reasonings,
     isComputing,
     heroesById,
+    resetAll,
   };
 }

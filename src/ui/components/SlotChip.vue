@@ -44,7 +44,7 @@ function handleClick() {
 
 <template>
   <div
-    class="aspect-square rounded-md border-2 relative flex flex-col items-center justify-center text-center overflow-hidden transition-all"
+    class="w-14 h-14 rounded-md border-2 relative flex flex-col items-center justify-center text-center overflow-hidden transition-all"
     :class="[
       roleBorder[role],
       hero
@@ -88,8 +88,8 @@ function handleClick() {
       >&times;</button>
     </template>
     <template v-else>
-      <span class="text-xl font-bold opacity-60">{{ ROLE_ABBR[role] }}</span>
-      <span class="text-[10px] uppercase tracking-wider opacity-60 mt-0.5">
+      <span class="text-base font-bold opacity-60 leading-none">{{ ROLE_ABBR[role] }}</span>
+      <span class="text-[8px] uppercase tracking-wider opacity-60 mt-0.5">
         {{ ROLE_LABEL[role] }}
       </span>
     </template>
