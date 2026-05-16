@@ -108,7 +108,7 @@ function archetypeTerm(terms: readonly Term[]): number {
 }
 
 export function topKCounters(
-  enemy: Comp,
+  enemy: Comp | null,
   ctx: MatchupCtx,
   k: number,
   weights: Weights,

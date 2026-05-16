@@ -83,25 +83,27 @@ function lookupAntiSyn(
 
 export function scoreComp(
   my: Comp,
-  enemy: Comp,
+  enemy: Comp | null,
   ctx: MatchupCtx,
   weights: Weights,
   data: ScoringData,
 ): ScoreResult {
   const terms: Term[] = [];
   const myHeroes = compHeroes(my);
-  const enemyHeroes = compHeroes(enemy);
   const mapId = ctx.mapId;
 
-  for (const myId of myHeroes) {
-    for (const enId of enemyHeroes) {
-      const raw = lookupPair(myId, enId, mapId, data);
-      if (raw === 0) continue;
-      terms.push({
-        kind: 'pair',
-        label: `${nameOf(myId, data)} vs ${nameOf(enId, data)}: ${raw}`,
-        value: raw * weights.pair,
-      });
+  if (enemy) {
+    const enemyHeroes = compHeroes(enemy);
+    for (const myId of myHeroes) {
+      for (const enId of enemyHeroes) {
+        const raw = lookupPair(myId, enId, mapId, data);
+        if (raw === 0) continue;
+        terms.push({
+          kind: 'pair',
+          label: `${nameOf(myId, data)} vs ${nameOf(enId, data)}: ${raw}`,
+          value: raw * weights.pair,
+        });
+      }
     }
   }
 
@@ -133,7 +135,7 @@ export function scoreComp(
     }
   }
 
-  if (data.archetypeMatchScore) {
+  if (enemy && data.archetypeMatchScore) {
     const res = data.archetypeMatchScore(my, enemy, data);
     const raw = typeof res === 'number' ? res : res.value;
     if (raw !== 0) {

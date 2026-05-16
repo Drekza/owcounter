@@ -70,17 +70,24 @@ export function useAppState() {
   const reasonings = ref<Reasoning[]>([]);
   const isComputing = ref(false);
 
+  const hasComputeInput = computed(
+    () =>
+      enemyComp.value !== null ||
+      (mapCtx.value.enabled && mapCtx.value.mapId !== null) ||
+      bans.value.length > 0 ||
+      myPickIds.value.length > 0,
+  );
+
   let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   function runCompute() {
-    const comp = enemyComp.value;
-    if (!comp) {
+    if (!hasComputeInput.value) {
       suggestions.value = [];
       reasonings.value = [];
       return;
     }
     const sugs = topKCounters(
-      comp,
+      enemyComp.value,
       ctx.value,
       TOP_K,
       DEFAULT_WEIGHTS,
@@ -93,7 +100,7 @@ export function useAppState() {
 
   function scheduleCompute() {
     if (debounceTimer !== null) clearTimeout(debounceTimer);
-    if (!enemyComp.value) {
+    if (!hasComputeInput.value) {
       isComputing.value = false;
       suggestions.value = [];
       reasonings.value = [];

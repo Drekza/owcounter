@@ -81,6 +81,22 @@ const myPicksCount = computed(() => myPickIds.value.length);
 
 const lockedIdSet = computed(() => new Set(myPickIds.value));
 
+const hasSuggestionContext = computed(
+  () =>
+    enemyComp.value !== null ||
+    (mapCtx.value.enabled && mapCtx.value.mapId !== null) ||
+    bans.value.length > 0 ||
+    myPicksCount.value > 0,
+);
+
+const suggestionPanelTitle = computed(() =>
+  enemyComp.value ? 'Suggested counters' : 'Suggested comps',
+);
+
+const suggestionPanelLabel = computed(() =>
+  enemyComp.value ? 'Suggested counters' : 'Suggested comps',
+);
+
 const patchLabel = computed(() => patch || 'Data: pending');
 const updatedLabel = computed(() => (updated ? `Updated ${updated}` : 'Updated â€”'));
 </script>
@@ -146,9 +162,9 @@ const updatedLabel = computed(() => (updated ? `Updated ${updated}` : 'Updated â
         />
       </section>
 
-      <section class="panel p-5" aria-label="Suggested counters">
+      <section class="panel p-5" :aria-label="suggestionPanelLabel">
         <div class="flex items-center justify-between mb-3">
-          <h2 class="panel-title">Suggested counters</h2>
+          <h2 class="panel-title">{{ suggestionPanelTitle }}</h2>
           <span
             v-if="isComputing"
             class="text-[10px] uppercase tracking-wide text-ow-orange flex items-center gap-1.5"
@@ -166,14 +182,20 @@ const updatedLabel = computed(() => (updated ? `Updated ${updated}` : 'Updated â
         >
           Suggestions respect {{ myPicksCount }} locked pick{{ myPicksCount > 1 ? 's' : '' }}.
         </p>
-        <p v-if="!enemyComp" class="text-sm text-slate-400">
+        <p
+          v-if="!enemyComp && hasSuggestionContext && !isComputing"
+          class="text-[11px] text-slate-400 mb-2"
+        >
+          No enemy locked â€” ranking by synergy{{ mapCtx.enabled && mapCtx.mapId ? ' and map' : '' }}{{ bans.length ? ' (bans applied)' : '' }}.
+        </p>
+        <p v-if="!hasSuggestionContext" class="text-sm text-slate-400">
           <template v-if="filledEnemyCount === 0">
-            Pick 5 enemy heroes to see suggestions.
+            Pick enemy heroes, a map, or bans to see suggestions.
           </template>
           <template v-else>
             Pick {{ 5 - filledEnemyCount }} more enemy hero{{
               5 - filledEnemyCount > 1 ? 'es' : ''
-            }}.
+            }} â€” or set a map/bans for partial suggestions.
           </template>
         </p>
         <div

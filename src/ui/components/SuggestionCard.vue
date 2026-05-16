@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type { Hero, Role, Suggestion, TermKind } from '../../domain/types';
+import type { Archetype, Hero, Role, Suggestion, TermKind } from '../../domain/types';
 import type { Reasoning } from '../../domain/reasoning';
+import { compArchetypeProfile } from '../../domain/archetypes';
 
 const props = defineProps<{
   rank: number;
@@ -10,6 +11,38 @@ const props = defineProps<{
   reasoning: Reasoning;
   lockedIds?: Set<string>;
 }>();
+
+const ARCHETYPE_LABEL: Record<Archetype, string> = {
+  dive: 'Dive',
+  brawl: 'Brawl',
+  poke: 'Poke',
+};
+
+interface ArchRow {
+  key: Archetype;
+  label: string;
+  pct: number;
+  dominant: boolean;
+}
+
+const archetypeRows = computed<ArchRow[]>(() => {
+  const profile = compArchetypeProfile(props.suggestion.comp, props.heroesById);
+  const dive = Math.round((profile.dive ?? 0) * 100);
+  const brawl = Math.round((profile.brawl ?? 0) * 100);
+  const poke = Math.max(0, 100 - dive - brawl);
+  const raw: { key: Archetype; label: string; pct: number }[] = [
+    { key: 'dive', label: ARCHETYPE_LABEL.dive, pct: dive },
+    { key: 'brawl', label: ARCHETYPE_LABEL.brawl, pct: brawl },
+    { key: 'poke', label: ARCHETYPE_LABEL.poke, pct: poke },
+  ];
+  const max = Math.max(dive, brawl, poke);
+  return raw.map((r) => ({ ...r, dominant: r.pct === max && max > 0 }));
+});
+
+const dominantLabel = computed(() => {
+  const top = archetypeRows.value.find((r) => r.dominant);
+  return top ? top.label : '—';
+});
 
 const expanded = ref(props.rank === 1);
 
@@ -115,7 +148,7 @@ function onImgError(id: string) {
       </span>
     </button>
 
-    <div class="px-4 pb-3 flex gap-2" aria-label="Comp roster">
+    <div class="px-4 pb-2 flex gap-2" aria-label="Comp roster">
       <div
         v-for="(s, i) in slots"
         :key="i"
@@ -150,6 +183,27 @@ function onImgError(id: string) {
           </div>
         </template>
       </div>
+    </div>
+
+    <div
+      class="px-4 pb-3 flex items-center gap-2 text-[11px]"
+      aria-label="Comp archetype"
+    >
+      <span class="uppercase tracking-wider text-slate-500">Archetype</span>
+      <span class="text-ow-orange font-semibold">{{ dominantLabel }}</span>
+      <span class="text-slate-500">·</span>
+      <span
+        v-for="(r, i) in archetypeRows"
+        :key="r.key"
+        :class="r.dominant ? 'text-slate-100 font-semibold' : 'text-slate-400'"
+      >
+        {{ r.label }} {{ r.pct }}%<span
+          v-if="i < archetypeRows.length - 1"
+          class="text-slate-600"
+        >
+          ·
+        </span>
+      </span>
     </div>
 
     <div
