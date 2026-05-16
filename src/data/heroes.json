@@ -1,0 +1,414 @@
+{
+  "patch": "Season 2: Summit",
+  "updated": "2026-05-16",
+  "heroes": [
+    {
+      "id": "ana",
+      "name": "Ana",
+      "role": "support",
+      "archetype": { "dive": 0.3, "brawl": 0.4, "poke": 0.3 },
+      "tags": ["hitscan", "sniper", "immobile", "anti-heal", "cc", "low-mobility-support", "dive-target"],
+      "portrait": "/heroes/ana.png"
+    },
+    {
+      "id": "anran",
+      "name": "Anran",
+      "role": "dps",
+      "archetype": { "dive": 0.8, "brawl": 0.2, "poke": 0.0 },
+      "tags": ["projectile", "mobile", "flanker", "burst-damage"],
+      "portrait": "/heroes/anran.png"
+    },
+    {
+      "id": "ashe",
+      "name": "Ashe",
+      "role": "dps",
+      "archetype": { "dive": 0.05, "brawl": 0.05, "poke": 0.9 },
+      "tags": ["hitscan", "sniper", "burst-damage", "immobile"],
+      "portrait": "/heroes/ashe.png"
+    },
+    {
+      "id": "baptiste",
+      "name": "Baptiste",
+      "role": "support",
+      "archetype": { "dive": 0.05, "brawl": 0.4, "poke": 0.55 },
+      "tags": ["projectile", "burst-damage", "low-mobility-support", "dive-target"],
+      "portrait": "/heroes/baptiste.png"
+    },
+    {
+      "id": "bastion",
+      "name": "Bastion",
+      "role": "dps",
+      "archetype": { "dive": 0.0, "brawl": 0.65, "poke": 0.35 },
+      "tags": ["hitscan", "projectile", "sustain-damage", "aoe", "immobile"],
+      "portrait": "/heroes/bastion.png"
+    },
+    {
+      "id": "brigitte",
+      "name": "Brigitte",
+      "role": "support",
+      "archetype": { "dive": 0.1, "brawl": 0.75, "poke": 0.15 },
+      "tags": ["melee", "cc", "mobile-support"],
+      "portrait": "/heroes/brigitte.png"
+    },
+    {
+      "id": "cassidy",
+      "name": "Cassidy",
+      "role": "dps",
+      "archetype": { "dive": 0.1, "brawl": 0.45, "poke": 0.45 },
+      "tags": ["hitscan", "burst-damage", "cc"],
+      "portrait": "/heroes/cassidy.png"
+    },
+    {
+      "id": "domina",
+      "name": "Domina",
+      "role": "tank",
+      "archetype": { "dive": 0.0, "brawl": 0.1, "poke": 0.9 },
+      "tags": ["hitscan", "barrier-shield", "immobile", "cc", "burst-damage"],
+      "portrait": "/heroes/domina.png"
+    },
+    {
+      "id": "doomfist",
+      "name": "Doomfist",
+      "role": "tank",
+      "archetype": { "dive": 0.7, "brawl": 0.3, "poke": 0.0 },
+      "tags": ["melee", "mobile", "burst-damage", "cc"],
+      "portrait": "/heroes/doomfist.png"
+    },
+    {
+      "id": "dva",
+      "name": "D.Va",
+      "role": "tank",
+      "archetype": { "dive": 0.5, "brawl": 0.0, "poke": 0.5 },
+      "tags": ["hitscan", "mobile", "dive-target"],
+      "portrait": "/heroes/dva.png"
+    },
+    {
+      "id": "echo",
+      "name": "Echo",
+      "role": "dps",
+      "archetype": { "dive": 0.65, "brawl": 0.1, "poke": 0.25 },
+      "tags": ["projectile", "mobile", "flanker", "burst-damage"],
+      "portrait": "/heroes/echo.png"
+    },
+    {
+      "id": "emre",
+      "name": "Emre",
+      "role": "dps",
+      "archetype": { "dive": 0.1, "brawl": 0.45, "poke": 0.45 },
+      "tags": ["hitscan", "sustain-damage", "burst-damage"],
+      "portrait": "/heroes/emre.png"
+    },
+    {
+      "id": "freja",
+      "name": "Freja",
+      "role": "dps",
+      "archetype": { "dive": 0.35, "brawl": 0.1, "poke": 0.55 },
+      "tags": ["projectile", "sniper", "mobile", "burst-damage"],
+      "portrait": "/heroes/freja.png"
+    },
+    {
+      "id": "genji",
+      "name": "Genji",
+      "role": "dps",
+      "archetype": { "dive": 0.9, "brawl": 0.1, "poke": 0.0 },
+      "tags": ["projectile", "melee", "mobile", "flanker"],
+      "portrait": "/heroes/genji.png"
+    },
+    {
+      "id": "hanzo",
+      "name": "Hanzo",
+      "role": "dps",
+      "archetype": { "dive": 0.05, "brawl": 0.05, "poke": 0.9 },
+      "tags": ["projectile", "sniper", "immobile", "burst-damage"],
+      "portrait": "/heroes/hanzo.png"
+    },
+    {
+      "id": "hazard",
+      "name": "Hazard",
+      "role": "tank",
+      "archetype": { "dive": 0.4, "brawl": 0.6, "poke": 0.0 },
+      "tags": ["melee", "mobile", "burst-damage", "cc"],
+      "portrait": "/heroes/hazard.png"
+    },
+    {
+      "id": "illari",
+      "name": "Illari",
+      "role": "support",
+      "archetype": { "dive": 0.05, "brawl": 0.05, "poke": 0.9 },
+      "tags": ["hitscan", "sniper", "burst-damage", "low-mobility-support", "dive-target"],
+      "portrait": "/heroes/illari.png"
+    },
+    {
+      "id": "jetpack-cat",
+      "name": "Jetpack Cat",
+      "role": "support",
+      "archetype": { "dive": 0.7, "brawl": 0.2, "poke": 0.1 },
+      "tags": ["projectile", "mobile-support", "mobile", "aoe"],
+      "portrait": "/heroes/jetpack-cat.png"
+    },
+    {
+      "id": "junker-queen",
+      "name": "Junker Queen",
+      "role": "tank",
+      "archetype": { "dive": 0.1, "brawl": 0.9, "poke": 0.0 },
+      "tags": ["melee", "anti-heal", "burst-damage", "mobile"],
+      "portrait": "/heroes/junker-queen.png"
+    },
+    {
+      "id": "junkrat",
+      "name": "Junkrat",
+      "role": "dps",
+      "archetype": { "dive": 0.0, "brawl": 0.65, "poke": 0.35 },
+      "tags": ["projectile", "aoe", "cc"],
+      "portrait": "/heroes/junkrat.png"
+    },
+    {
+      "id": "juno",
+      "name": "Juno",
+      "role": "support",
+      "archetype": { "dive": 0.55, "brawl": 0.25, "poke": 0.2 },
+      "tags": ["projectile", "mobile-support", "mobile"],
+      "portrait": "/heroes/juno.png"
+    },
+    {
+      "id": "kiriko",
+      "name": "Kiriko",
+      "role": "support",
+      "archetype": { "dive": 0.5, "brawl": 0.4, "poke": 0.1 },
+      "tags": ["projectile", "mobile-support", "mobile", "pocket-support"],
+      "portrait": "/heroes/kiriko.png"
+    },
+    {
+      "id": "lifeweaver",
+      "name": "Lifeweaver",
+      "role": "support",
+      "archetype": { "dive": 0.1, "brawl": 0.4, "poke": 0.5 },
+      "tags": ["projectile", "low-mobility-support", "dive-target", "pocket-support"],
+      "portrait": "/heroes/lifeweaver.png"
+    },
+    {
+      "id": "lucio",
+      "name": "Lúcio",
+      "role": "support",
+      "archetype": { "dive": 0.6, "brawl": 0.4, "poke": 0.0 },
+      "tags": ["projectile", "mobile-support", "mobile", "aoe", "cc"],
+      "portrait": "/heroes/lucio.png"
+    },
+    {
+      "id": "mauga",
+      "name": "Mauga",
+      "role": "tank",
+      "archetype": { "dive": 0.0, "brawl": 0.7, "poke": 0.3 },
+      "tags": ["hitscan", "sustain-damage", "immobile", "burst-damage"],
+      "portrait": "/heroes/mauga.png"
+    },
+    {
+      "id": "mei",
+      "name": "Mei",
+      "role": "dps",
+      "archetype": { "dive": 0.05, "brawl": 0.65, "poke": 0.3 },
+      "tags": ["hitscan", "projectile", "cc", "sustain-damage"],
+      "portrait": "/heroes/mei.png"
+    },
+    {
+      "id": "mercy",
+      "name": "Mercy",
+      "role": "support",
+      "archetype": { "dive": 0.6, "brawl": 0.2, "poke": 0.2 },
+      "tags": ["projectile", "mobile-support", "mobile", "pocket-support"],
+      "portrait": "/heroes/mercy.png"
+    },
+    {
+      "id": "mizuki",
+      "name": "Mizuki",
+      "role": "support",
+      "archetype": { "dive": 0.5, "brawl": 0.4, "poke": 0.1 },
+      "tags": ["projectile", "mobile-support", "mobile", "cc", "aoe"],
+      "portrait": "/heroes/mizuki.png"
+    },
+    {
+      "id": "moira",
+      "name": "Moira",
+      "role": "support",
+      "archetype": { "dive": 0.5, "brawl": 0.4, "poke": 0.1 },
+      "tags": ["mobile-support", "mobile", "anti-heal", "sustain-damage"],
+      "portrait": "/heroes/moira.png"
+    },
+    {
+      "id": "orisa",
+      "name": "Orisa",
+      "role": "tank",
+      "archetype": { "dive": 0.05, "brawl": 0.45, "poke": 0.5 },
+      "tags": ["projectile", "immobile", "sustain-damage", "cc"],
+      "portrait": "/heroes/orisa.png"
+    },
+    {
+      "id": "pharah",
+      "name": "Pharah",
+      "role": "dps",
+      "archetype": { "dive": 0.4, "brawl": 0.0, "poke": 0.6 },
+      "tags": ["projectile", "mobile", "aoe", "burst-damage"],
+      "portrait": "/heroes/pharah.png"
+    },
+    {
+      "id": "ramattra",
+      "name": "Ramattra",
+      "role": "tank",
+      "archetype": { "dive": 0.05, "brawl": 0.55, "poke": 0.4 },
+      "tags": ["projectile", "melee", "barrier-shield", "cc"],
+      "portrait": "/heroes/ramattra.png"
+    },
+    {
+      "id": "reaper",
+      "name": "Reaper",
+      "role": "dps",
+      "archetype": { "dive": 0.45, "brawl": 0.55, "poke": 0.0 },
+      "tags": ["hitscan", "mobile", "sustain-damage", "flanker"],
+      "portrait": "/heroes/reaper.png"
+    },
+    {
+      "id": "reinhardt",
+      "name": "Reinhardt",
+      "role": "tank",
+      "archetype": { "dive": 0.05, "brawl": 0.95, "poke": 0.0 },
+      "tags": ["melee", "immobile", "barrier-shield", "cc"],
+      "portrait": "/heroes/reinhardt.png"
+    },
+    {
+      "id": "roadhog",
+      "name": "Roadhog",
+      "role": "tank",
+      "archetype": { "dive": 0.0, "brawl": 0.6, "poke": 0.4 },
+      "tags": ["projectile", "hitscan", "immobile", "cc", "burst-damage"],
+      "portrait": "/heroes/roadhog.png"
+    },
+    {
+      "id": "sierra",
+      "name": "Sierra",
+      "role": "dps",
+      "archetype": { "dive": 0.5, "brawl": 0.1, "poke": 0.4 },
+      "tags": ["hitscan", "mobile", "sustain-damage"],
+      "portrait": "/heroes/sierra.png"
+    },
+    {
+      "id": "sigma",
+      "name": "Sigma",
+      "role": "tank",
+      "archetype": { "dive": 0.0, "brawl": 0.2, "poke": 0.8 },
+      "tags": ["projectile", "barrier-shield", "cc", "immobile", "burst-damage"],
+      "portrait": "/heroes/sigma.png"
+    },
+    {
+      "id": "sojourn",
+      "name": "Sojourn",
+      "role": "dps",
+      "archetype": { "dive": 0.5, "brawl": 0.05, "poke": 0.45 },
+      "tags": ["hitscan", "mobile", "burst-damage"],
+      "portrait": "/heroes/sojourn.png"
+    },
+    {
+      "id": "soldier-76",
+      "name": "Soldier: 76",
+      "role": "dps",
+      "archetype": { "dive": 0.1, "brawl": 0.4, "poke": 0.5 },
+      "tags": ["hitscan", "sustain-damage", "mobile"],
+      "portrait": "/heroes/soldier-76.png"
+    },
+    {
+      "id": "sombra",
+      "name": "Sombra",
+      "role": "dps",
+      "archetype": { "dive": 0.9, "brawl": 0.1, "poke": 0.0 },
+      "tags": ["hitscan", "mobile", "flanker", "cc"],
+      "portrait": "/heroes/sombra.png"
+    },
+    {
+      "id": "symmetra",
+      "name": "Symmetra",
+      "role": "dps",
+      "archetype": { "dive": 0.05, "brawl": 0.85, "poke": 0.1 },
+      "tags": ["projectile", "sustain-damage", "immobile"],
+      "portrait": "/heroes/symmetra.png"
+    },
+    {
+      "id": "torbjorn",
+      "name": "Torbjörn",
+      "role": "dps",
+      "archetype": { "dive": 0.0, "brawl": 0.55, "poke": 0.45 },
+      "tags": ["hitscan", "projectile", "sustain-damage", "immobile"],
+      "portrait": "/heroes/torbjorn.png"
+    },
+    {
+      "id": "tracer",
+      "name": "Tracer",
+      "role": "dps",
+      "archetype": { "dive": 0.95, "brawl": 0.05, "poke": 0.0 },
+      "tags": ["hitscan", "mobile", "flanker", "burst-damage"],
+      "portrait": "/heroes/tracer.png"
+    },
+    {
+      "id": "vendetta",
+      "name": "Vendetta",
+      "role": "dps",
+      "archetype": { "dive": 0.7, "brawl": 0.3, "poke": 0.0 },
+      "tags": ["melee", "mobile", "flanker", "burst-damage"],
+      "portrait": "/heroes/vendetta.png"
+    },
+    {
+      "id": "venture",
+      "name": "Venture",
+      "role": "dps",
+      "archetype": { "dive": 0.5, "brawl": 0.5, "poke": 0.0 },
+      "tags": ["projectile", "mobile", "burst-damage", "aoe"],
+      "portrait": "/heroes/venture.png"
+    },
+    {
+      "id": "widowmaker",
+      "name": "Widowmaker",
+      "role": "dps",
+      "archetype": { "dive": 0.05, "brawl": 0.0, "poke": 0.95 },
+      "tags": ["hitscan", "sniper", "immobile", "burst-damage"],
+      "portrait": "/heroes/widowmaker.png"
+    },
+    {
+      "id": "winston",
+      "name": "Winston",
+      "role": "tank",
+      "archetype": { "dive": 0.9, "brawl": 0.1, "poke": 0.0 },
+      "tags": ["hitscan", "mobile", "barrier-shield", "aoe"],
+      "portrait": "/heroes/winston.png"
+    },
+    {
+      "id": "wrecking-ball",
+      "name": "Wrecking Ball",
+      "role": "tank",
+      "archetype": { "dive": 0.9, "brawl": 0.1, "poke": 0.0 },
+      "tags": ["hitscan", "mobile", "cc"],
+      "portrait": "/heroes/wrecking-ball.png"
+    },
+    {
+      "id": "wuyang",
+      "name": "Wuyang",
+      "role": "support",
+      "archetype": { "dive": 0.1, "brawl": 0.2, "poke": 0.7 },
+      "tags": ["projectile", "mobile-support", "mobile"],
+      "portrait": "/heroes/wuyang.png"
+    },
+    {
+      "id": "zarya",
+      "name": "Zarya",
+      "role": "tank",
+      "archetype": { "dive": 0.05, "brawl": 0.85, "poke": 0.1 },
+      "tags": ["projectile", "barrier-shield", "sustain-damage"],
+      "portrait": "/heroes/zarya.png"
+    },
+    {
+      "id": "zenyatta",
+      "name": "Zenyatta",
+      "role": "support",
+      "archetype": { "dive": 0.05, "brawl": 0.1, "poke": 0.85 },
+      "tags": ["projectile", "immobile", "dive-target", "burst-damage", "anti-heal", "low-mobility-support"],
+      "portrait": "/heroes/zenyatta.png"
+    }
+  ]
+}

@@ -1,0 +1,281 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`known enemy comps — top-5 counter snapshots > Circuit Royal + double-sniper enemy 1`] = `
+[
+  [
+    "winston",
+    "sombra",
+    "tracer",
+    "ana",
+    "jetpack-cat",
+  ],
+  [
+    "doomfist",
+    "sombra",
+    "tracer",
+    "jetpack-cat",
+    "kiriko",
+  ],
+  [
+    "winston",
+    "sombra",
+    "tracer",
+    "jetpack-cat",
+    "kiriko",
+  ],
+  [
+    "doomfist",
+    "sombra",
+    "tracer",
+    "illari",
+    "jetpack-cat",
+  ],
+  [
+    "doomfist",
+    "sombra",
+    "tracer",
+    "ana",
+    "jetpack-cat",
+  ],
+]
+`;
+
+exports[`known enemy comps — top-5 counter snapshots > dive enemy with bans (Zarya + Brigitte banned) 1`] = `
+[
+  [
+    "roadhog",
+    "mei",
+    "reaper",
+    "mizuki",
+    "moira",
+  ],
+  [
+    "winston",
+    "mei",
+    "reaper",
+    "mizuki",
+    "moira",
+  ],
+  [
+    "dva",
+    "mei",
+    "reaper",
+    "mizuki",
+    "moira",
+  ],
+  [
+    "junker-queen",
+    "mei",
+    "reaper",
+    "mizuki",
+    "moira",
+  ],
+  [
+    "orisa",
+    "mei",
+    "reaper",
+    "mizuki",
+    "moira",
+  ],
+]
+`;
+
+exports[`known enemy comps — top-5 counter snapshots > mixed dive+poke enemy 1`] = `
+[
+  [
+    "winston",
+    "reaper",
+    "sombra",
+    "brigitte",
+    "moira",
+  ],
+  [
+    "winston",
+    "reaper",
+    "sombra",
+    "mizuki",
+    "moira",
+  ],
+  [
+    "doomfist",
+    "reaper",
+    "sombra",
+    "brigitte",
+    "moira",
+  ],
+  [
+    "doomfist",
+    "reaper",
+    "sombra",
+    "mizuki",
+    "moira",
+  ],
+  [
+    "winston",
+    "reaper",
+    "sombra",
+    "jetpack-cat",
+    "moira",
+  ],
+]
+`;
+
+exports[`known enemy comps — top-5 counter snapshots > pure brawl enemy 1`] = `
+[
+  [
+    "mauga",
+    "bastion",
+    "pharah",
+    "lucio",
+    "wuyang",
+  ],
+  [
+    "sigma",
+    "bastion",
+    "pharah",
+    "lucio",
+    "wuyang",
+  ],
+  [
+    "sigma",
+    "bastion",
+    "pharah",
+    "baptiste",
+    "lucio",
+  ],
+  [
+    "ramattra",
+    "bastion",
+    "pharah",
+    "lucio",
+    "wuyang",
+  ],
+  [
+    "junker-queen",
+    "bastion",
+    "pharah",
+    "lucio",
+    "wuyang",
+  ],
+]
+`;
+
+exports[`known enemy comps — top-5 counter snapshots > pure dive enemy 1`] = `
+[
+  [
+    "zarya",
+    "mei",
+    "reaper",
+    "brigitte",
+    "moira",
+  ],
+  [
+    "zarya",
+    "mei",
+    "reaper",
+    "brigitte",
+    "mizuki",
+  ],
+  [
+    "roadhog",
+    "mei",
+    "reaper",
+    "brigitte",
+    "moira",
+  ],
+  [
+    "zarya",
+    "reaper",
+    "symmetra",
+    "brigitte",
+    "moira",
+  ],
+  [
+    "zarya",
+    "mei",
+    "symmetra",
+    "brigitte",
+    "moira",
+  ],
+]
+`;
+
+exports[`known enemy comps — top-5 counter snapshots > pure poke enemy 1`] = `
+[
+  [
+    "winston",
+    "sombra",
+    "tracer",
+    "ana",
+    "kiriko",
+  ],
+  [
+    "doomfist",
+    "sombra",
+    "tracer",
+    "ana",
+    "kiriko",
+  ],
+  [
+    "doomfist",
+    "sombra",
+    "tracer",
+    "kiriko",
+    "mercy",
+  ],
+  [
+    "winston",
+    "sombra",
+    "tracer",
+    "ana",
+    "mercy",
+  ],
+  [
+    "winston",
+    "sombra",
+    "tracer",
+    "ana",
+    "juno",
+  ],
+]
+`;
+
+exports[`known enemy comps — top-5 counter snapshots > tank-busting enemy (Mauga + Reaper) 1`] = `
+[
+  [
+    "sigma",
+    "pharah",
+    "widowmaker",
+    "baptiste",
+    "juno",
+  ],
+  [
+    "sigma",
+    "ashe",
+    "widowmaker",
+    "baptiste",
+    "kiriko",
+  ],
+  [
+    "sigma",
+    "ashe",
+    "widowmaker",
+    "baptiste",
+    "moira",
+  ],
+  [
+    "sigma",
+    "ashe",
+    "widowmaker",
+    "baptiste",
+    "juno",
+  ],
+  [
+    "sigma",
+    "mei",
+    "pharah",
+    "baptiste",
+    "juno",
+  ],
+]
+`;

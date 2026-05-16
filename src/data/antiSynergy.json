@@ -1,0 +1,22 @@
+{
+  "scale": "+1..+2 (stored positive; scoring applies as negative)",
+  "comment": "Sparse map of weak same-team hero pairings for OW Season 2: Summit. Conservative — over-penalizing pushes the algo toward mirror comps. Keys canonicalized alphabetically. Curated 2026-05-16 from mobalytics / dotesports / overpicker / balltrotter / counterwatch.",
+  "pairs": {
+    "ana:widowmaker": 1,
+    "bastion:tracer": 1,
+    "bastion:winston": 1,
+    "domina:tracer": 1,
+    "doomfist:widowmaker": 1,
+    "hanzo:widowmaker": 1,
+    "hanzo:zenyatta": 1,
+    "junker-queen:widowmaker": 1,
+    "lifeweaver:tracer": 1,
+    "lifeweaver:winston": 1,
+    "mauga:tracer": 1,
+    "mauga:widowmaker": 1,
+    "pharah:reaper": 2,
+    "pharah:reinhardt": 1,
+    "reinhardt:widowmaker": 2,
+    "widowmaker:zenyatta": 1
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "owcounter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "sync-heroes": "tsx scripts/sync-heroes.ts",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "dependencies": {
+    "vue": "^3.4.27"
+  },
+  "devDependencies": {
+    "@types/node": "^25.8.0",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/test-utils": "^2.4.6",
+    "autoprefixer": "^10.4.19",
+    "gh-pages": "^6.1.1",
+    "jsdom": "^24.1.0",
+    "playwright": "^1.60.0",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "tsx": "^4.15.6",
+    "typescript": "^5.4.5",
+    "vite": "^5.3.1",
+    "vitest": "^1.6.0",
+    "vue-tsc": "^2.0.21"
+  }
+}

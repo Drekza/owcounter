@@ -1,0 +1,20 @@
+node_modules
+dist
+.vite
+.env
+.env.local
+.DS_Store
+Thumbs.db
+*.log
+coverage
+
+# Claude Code / agent state (per-user)
+.claude/
+
+# Local dev/test snapshots
+.snapshots/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp

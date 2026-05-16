@@ -1,0 +1,279 @@
+{
+  "comment": "OW2 map pool with selective map-conditional overrides for matchups and anti-synergy. Overrides REPLACE base values (not additive). Matchup keys are directional 'myId:enemyId'; anti-synergy keys are canonicalized alphabetically (smaller id first). Curated 2026-05-16 for Season 2: Summit. Cross-referenced with Blizzard map docs / playoverwatch / liquipedia / overpicker map guides.",
+  "modes": ["control", "escort", "hybrid", "push", "flashpoint", "clash"],
+  "maps": [
+    {
+      "id": "antarctic-peninsula",
+      "name": "Antarctic Peninsula",
+      "mode": "control"
+    },
+    {
+      "id": "busan",
+      "name": "Busan",
+      "mode": "control"
+    },
+    {
+      "id": "ilios",
+      "name": "Ilios",
+      "mode": "control"
+    },
+    {
+      "id": "lijiang-tower",
+      "name": "Lijiang Tower",
+      "mode": "control",
+      "overrides": {
+        "matchups": {
+          "winston:ana": 2,
+          "ana:winston": -2,
+          "tracer:zenyatta": 2
+        }
+      }
+    },
+    {
+      "id": "nepal",
+      "name": "Nepal",
+      "mode": "control",
+      "overrides": {
+        "matchups": {
+          "winston:ana": 2,
+          "tracer:zenyatta": 2,
+          "ana:winston": -2
+        }
+      }
+    },
+    {
+      "id": "oasis",
+      "name": "Oasis",
+      "mode": "control"
+    },
+    {
+      "id": "samoa",
+      "name": "Samoa",
+      "mode": "control"
+    },
+
+    {
+      "id": "circuit-royal",
+      "name": "Circuit Royal",
+      "mode": "escort",
+      "overrides": {
+        "antiSynergy": {
+          "hanzo:widowmaker": 0
+        }
+      }
+    },
+    {
+      "id": "dorado",
+      "name": "Dorado",
+      "mode": "escort",
+      "overrides": {
+        "antiSynergy": {
+          "hanzo:widowmaker": 0
+        }
+      }
+    },
+    {
+      "id": "havana",
+      "name": "Havana",
+      "mode": "escort",
+      "overrides": {
+        "matchups": {
+          "pharah:cassidy": -1,
+          "pharah:sojourn": -1,
+          "pharah:soldier-76": 0,
+          "pharah:ashe": -1
+        },
+        "antiSynergy": {
+          "hanzo:widowmaker": 0
+        }
+      }
+    },
+    {
+      "id": "junkertown",
+      "name": "Junkertown",
+      "mode": "escort",
+      "overrides": {
+        "matchups": {
+          "pharah:cassidy": -1,
+          "pharah:sojourn": -1,
+          "pharah:soldier-76": 0,
+          "pharah:ashe": -1
+        },
+        "antiSynergy": {
+          "hanzo:widowmaker": 0
+        }
+      }
+    },
+    {
+      "id": "rialto",
+      "name": "Rialto",
+      "mode": "escort",
+      "overrides": {
+        "antiSynergy": {
+          "hanzo:widowmaker": 0
+        }
+      }
+    },
+    {
+      "id": "route-66",
+      "name": "Route 66",
+      "mode": "escort",
+      "overrides": {
+        "antiSynergy": {
+          "hanzo:widowmaker": 0
+        }
+      }
+    },
+    {
+      "id": "shambali",
+      "name": "Shambali Monastery",
+      "mode": "escort"
+    },
+    {
+      "id": "watchpoint-gibraltar",
+      "name": "Watchpoint: Gibraltar",
+      "mode": "escort",
+      "overrides": {
+        "antiSynergy": {
+          "hanzo:widowmaker": 0
+        }
+      }
+    },
+
+    {
+      "id": "blizzard-world",
+      "name": "Blizzard World",
+      "mode": "hybrid"
+    },
+    {
+      "id": "eichenwalde",
+      "name": "Eichenwalde",
+      "mode": "hybrid",
+      "overrides": {
+        "matchups": {
+          "winston:ana": 2,
+          "tracer:zenyatta": 2
+        }
+      }
+    },
+    {
+      "id": "hollywood",
+      "name": "Hollywood",
+      "mode": "hybrid",
+      "overrides": {
+        "matchups": {
+          "winston:ana": 2,
+          "tracer:zenyatta": 2
+        }
+      }
+    },
+    {
+      "id": "kings-row",
+      "name": "King's Row",
+      "mode": "hybrid",
+      "overrides": {
+        "matchups": {
+          "reinhardt:reaper": 0
+        }
+      }
+    },
+    {
+      "id": "midtown",
+      "name": "Midtown",
+      "mode": "hybrid",
+      "overrides": {
+        "antiSynergy": {
+          "hanzo:widowmaker": 0
+        }
+      }
+    },
+    {
+      "id": "numbani",
+      "name": "Numbani",
+      "mode": "hybrid",
+      "overrides": {
+        "matchups": {
+          "pharah:cassidy": -1,
+          "pharah:sojourn": -1
+        }
+      }
+    },
+    {
+      "id": "paraiso",
+      "name": "Paraíso",
+      "mode": "hybrid",
+      "overrides": {
+        "matchups": {
+          "pharah:cassidy": -1,
+          "pharah:sojourn": -1,
+          "pharah:ashe": -1
+        }
+      }
+    },
+
+    {
+      "id": "colosseo",
+      "name": "Colosseo",
+      "mode": "push"
+    },
+    {
+      "id": "esperanca",
+      "name": "Esperança",
+      "mode": "push",
+      "overrides": {
+        "antiSynergy": {
+          "hanzo:widowmaker": 0
+        }
+      }
+    },
+    {
+      "id": "new-queen-street",
+      "name": "New Queen Street",
+      "mode": "push"
+    },
+    {
+      "id": "runasapi",
+      "name": "Runasapi",
+      "mode": "push"
+    },
+
+    {
+      "id": "aatlis",
+      "name": "Aatlis",
+      "mode": "flashpoint"
+    },
+    {
+      "id": "new-junk-city",
+      "name": "New Junk City",
+      "mode": "flashpoint",
+      "overrides": {
+        "matchups": {
+          "pharah:cassidy": -1,
+          "pharah:sojourn": -1,
+          "pharah:soldier-76": 0
+        }
+      }
+    },
+    {
+      "id": "suravasa",
+      "name": "Suravasa",
+      "mode": "flashpoint"
+    },
+
+    {
+      "id": "hanaoka",
+      "name": "Hanaoka",
+      "mode": "clash"
+    },
+    {
+      "id": "throne-of-anubis",
+      "name": "Throne of Anubis",
+      "mode": "clash",
+      "overrides": {
+        "antiSynergy": {
+          "hanzo:widowmaker": 0
+        }
+      }
+    }
+  ]
+}
