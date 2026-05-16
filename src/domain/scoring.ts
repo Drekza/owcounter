@@ -1,5 +1,7 @@
-import { SUPPORT_HEAL_PENALTY } from '../config/constants';
+import { ARCHETYPE_DOMINANT_THRESHOLD, SUPPORT_HEAL_PENALTY } from '../config/constants';
+import { compArchetypeProfile } from './archetypes';
 import type {
+  Archetype,
   Comp,
   Hero,
   MapDef,
@@ -8,6 +10,12 @@ import type {
   Term,
   Weights,
 } from './types';
+
+const ARCHETYPE_LABEL: Record<Archetype, string> = {
+  dive: 'dive',
+  brawl: 'brawl',
+  poke: 'poke',
+};
 
 type SupportHealClass = 'main' | 'hybrid' | 'off';
 
@@ -61,6 +69,7 @@ export interface ScoringData {
   synergy: Record<string, number>;
   antiSynergy: Record<string, number>;
   mapsById: Map<string, MapDef>;
+  synergyByArchetype?: Partial<Record<Archetype, Record<string, number>>>;
   archetypeMatchScore?: (
     my: Comp,
     enemy: Comp,
@@ -179,6 +188,28 @@ export function scoreComp(
         label: `${nameOf(a, data)} + ${nameOf(b, data)}: -${raw}`,
         value: -raw * weights.antiSyn,
       });
+    }
+  }
+
+  if (data.synergyByArchetype) {
+    const profile = compArchetypeProfile(my, data.heroesById);
+    for (const arch of ['dive', 'brawl', 'poke'] as const) {
+      if (profile[arch] < ARCHETYPE_DOMINANT_THRESHOLD) continue;
+      const bucket = data.synergyByArchetype[arch];
+      if (!bucket) continue;
+      for (let i = 0; i < myHeroes.length; i++) {
+        for (let j = i + 1; j < myHeroes.length; j++) {
+          const a = myHeroes[i];
+          const b = myHeroes[j];
+          const raw = lookupUnordered(bucket, a, b);
+          if (raw === undefined || raw === 0) continue;
+          terms.push({
+            kind: 'synergy',
+            label: `${nameOf(a, data)} + ${nameOf(b, data)} (${ARCHETYPE_LABEL[arch]}): +${raw}`,
+            value: raw * weights.synergy,
+          });
+        }
+      }
     }
   }
 

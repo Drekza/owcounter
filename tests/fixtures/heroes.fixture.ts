@@ -1,4 +1,4 @@
-import type { ArchVec, Hero, MapDef, Role } from '../../src/domain/types';
+import type { Archetype, ArchVec, Hero, MapDef, Role } from '../../src/domain/types';
 import type { ScoringData } from '../../src/domain/scoring';
 
 const ARCH = {
@@ -44,6 +44,7 @@ export function buildScoringData(opts: {
   synergy?: Record<string, number>;
   antiSynergy?: Record<string, number>;
   maps?: MapDef[];
+  synergyByArchetype?: Partial<Record<Archetype, Record<string, number>>>;
   archetypeMatchScore?: ScoringData['archetypeMatchScore'];
 } = {}): ScoringData {
   const list = opts.heroes ?? heroes;
@@ -55,6 +56,7 @@ export function buildScoringData(opts: {
     synergy: opts.synergy ?? {},
     antiSynergy: opts.antiSynergy ?? {},
     mapsById: new Map(mapsList.map((m) => [m.id, m])),
+    synergyByArchetype: opts.synergyByArchetype,
     archetypeMatchScore: opts.archetypeMatchScore,
   };
 }

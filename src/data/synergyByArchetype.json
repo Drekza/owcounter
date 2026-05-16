@@ -1,0 +1,51 @@
+{
+  "note": "Bonus synergy added on top of base synergy.json when the team's archetype profile in this bucket >= ARCHETYPE_DOMINANT_THRESHOLD (0.4). Keys use canonical 'a:b' form (a < b lexicographically). +1 = decent context bonus, +2 = comp-defining combo (sparingly).",
+  "dive": {
+    "doomfist:kiriko": 1,
+    "doomfist:lucio": 1,
+    "dva:juno": 1,
+    "dva:lucio": 1,
+    "dva:mercy": 1,
+    "echo:mercy": 1,
+    "genji:kiriko": 2,
+    "genji:mercy": 1,
+    "juno:winston": 1,
+    "kiriko:tracer": 1,
+    "kiriko:winston": 1,
+    "lucio:winston": 2,
+    "mercy:sojourn": 1,
+    "mercy:winston": 1,
+    "moira:winston": 1,
+    "sombra:tracer": 1
+  },
+  "brawl": {
+    "ana:reinhardt": 2,
+    "baptiste:mei": 1,
+    "baptiste:reaper": 1,
+    "bastion:brigitte": 1,
+    "brigitte:reinhardt": 2,
+    "brigitte:zarya": 1,
+    "junkrat:mei": 1,
+    "lifeweaver:ramattra": 1,
+    "lucio:mauga": 1,
+    "lucio:reinhardt": 2,
+    "mauga:moira": 1,
+    "mei:symmetra": 1
+  },
+  "poke": {
+    "ashe:baptiste": 2,
+    "ashe:illari": 1,
+    "ashe:mercy": 1,
+    "ashe:zenyatta": 1,
+    "baptiste:bastion": 2,
+    "baptiste:hanzo": 1,
+    "baptiste:widowmaker": 1,
+    "bastion:orisa": 1,
+    "bastion:sigma": 1,
+    "hanzo:sigma": 1,
+    "hanzo:zenyatta": 1,
+    "mercy:soldier-76": 1,
+    "sigma:widowmaker": 2,
+    "widowmaker:zenyatta": 1
+  }
+}

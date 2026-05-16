@@ -3,13 +3,6 @@
 exports[`known enemy comps — top-5 counter snapshots > Circuit Royal + double-sniper enemy 1`] = `
 [
   [
-    "winston",
-    "sombra",
-    "tracer",
-    "ana",
-    "jetpack-cat",
-  ],
-  [
     "doomfist",
     "sombra",
     "tracer",
@@ -21,6 +14,13 @@ exports[`known enemy comps — top-5 counter snapshots > Circuit Royal + double-
     "sombra",
     "tracer",
     "jetpack-cat",
+    "kiriko",
+  ],
+  [
+    "winston",
+    "sombra",
+    "tracer",
+    "ana",
     "kiriko",
   ],
   [
@@ -28,20 +28,27 @@ exports[`known enemy comps — top-5 counter snapshots > Circuit Royal + double-
     "sombra",
     "tracer",
     "illari",
-    "jetpack-cat",
+    "kiriko",
   ],
   [
     "doomfist",
     "sombra",
     "tracer",
     "ana",
-    "jetpack-cat",
+    "kiriko",
   ],
 ]
 `;
 
 exports[`known enemy comps — top-5 counter snapshots > dive enemy with bans (Zarya + Brigitte banned) 1`] = `
 [
+  [
+    "winston",
+    "cassidy",
+    "mei",
+    "mizuki",
+    "moira",
+  ],
   [
     "roadhog",
     "cassidy",
@@ -53,6 +60,13 @@ exports[`known enemy comps — top-5 counter snapshots > dive enemy with bans (Z
     "winston",
     "cassidy",
     "mei",
+    "lucio",
+    "moira",
+  ],
+  [
+    "winston",
+    "cassidy",
+    "reaper",
     "mizuki",
     "moira",
   ],
@@ -63,20 +77,6 @@ exports[`known enemy comps — top-5 counter snapshots > dive enemy with bans (Z
     "mizuki",
     "moira",
   ],
-  [
-    "roadhog",
-    "cassidy",
-    "reaper",
-    "mizuki",
-    "moira",
-  ],
-  [
-    "winston",
-    "cassidy",
-    "reaper",
-    "mizuki",
-    "moira",
-  ],
 ]
 `;
 
@@ -84,9 +84,9 @@ exports[`known enemy comps — top-5 counter snapshots > mixed dive+poke enemy 1
 [
   [
     "winston",
-    "reaper",
     "sombra",
-    "brigitte",
+    "tracer",
+    "kiriko",
     "moira",
   ],
   [
@@ -97,24 +97,24 @@ exports[`known enemy comps — top-5 counter snapshots > mixed dive+poke enemy 1
     "moira",
   ],
   [
-    "winston",
-    "reaper",
+    "doomfist",
     "sombra",
+    "tracer",
+    "kiriko",
     "mizuki",
-    "moira",
   ],
   [
-    "doomfist",
+    "winston",
+    "sombra",
+    "tracer",
+    "kiriko",
+    "mizuki",
+  ],
+  [
+    "winston",
     "reaper",
     "sombra",
     "brigitte",
-    "moira",
-  ],
-  [
-    "doomfist",
-    "reaper",
-    "sombra",
-    "kiriko",
     "moira",
   ],
 ]
@@ -122,13 +122,6 @@ exports[`known enemy comps — top-5 counter snapshots > mixed dive+poke enemy 1
 
 exports[`known enemy comps — top-5 counter snapshots > pure brawl enemy 1`] = `
 [
-  [
-    "mauga",
-    "bastion",
-    "pharah",
-    "lucio",
-    "wuyang",
-  ],
   [
     "sigma",
     "bastion",
@@ -140,22 +133,29 @@ exports[`known enemy comps — top-5 counter snapshots > pure brawl enemy 1`] = 
     "sigma",
     "bastion",
     "pharah",
+    "baptiste",
+    "wuyang",
+  ],
+  [
+    "sigma",
+    "pharah",
+    "widowmaker",
+    "baptiste",
     "lucio",
+  ],
+  [
+    "sigma",
+    "bastion",
+    "pharah",
+    "baptiste",
     "mercy",
   ],
   [
-    "mauga",
+    "sigma",
     "bastion",
     "pharah",
-    "lucio",
-    "mercy",
-  ],
-  [
-    "ramattra",
-    "bastion",
-    "pharah",
-    "lucio",
-    "mercy",
+    "baptiste",
+    "jetpack-cat",
   ],
 ]
 `;
@@ -184,18 +184,18 @@ exports[`known enemy comps — top-5 counter snapshots > pure dive enemy 1`] = `
     "moira",
   ],
   [
-    "roadhog",
-    "cassidy",
-    "mei",
-    "brigitte",
-    "moira",
-  ],
-  [
     "zarya",
     "cassidy",
     "mei",
     "brigitte",
     "mizuki",
+  ],
+  [
+    "roadhog",
+    "cassidy",
+    "mei",
+    "brigitte",
+    "moira",
   ],
 ]
 `;
@@ -217,25 +217,25 @@ exports[`known enemy comps — top-5 counter snapshots > pure poke enemy 1`] = `
     "kiriko",
   ],
   [
+    "winston",
+    "sombra",
+    "tracer",
+    "juno",
+    "kiriko",
+  ],
+  [
+    "winston",
+    "sombra",
+    "tracer",
+    "kiriko",
+    "lucio",
+  ],
+  [
     "doomfist",
     "sombra",
     "tracer",
     "kiriko",
     "mercy",
-  ],
-  [
-    "winston",
-    "sombra",
-    "tracer",
-    "ana",
-    "mercy",
-  ],
-  [
-    "winston",
-    "sombra",
-    "tracer",
-    "ana",
-    "juno",
   ],
 ]
 `;
@@ -244,10 +244,10 @@ exports[`known enemy comps — top-5 counter snapshots > tank-busting enemy (Mau
 [
   [
     "sigma",
-    "pharah",
+    "ashe",
     "widowmaker",
     "baptiste",
-    "juno",
+    "illari",
   ],
   [
     "sigma",
@@ -272,10 +272,10 @@ exports[`known enemy comps — top-5 counter snapshots > tank-busting enemy (Mau
   ],
   [
     "sigma",
-    "mei",
-    "pharah",
+    "ashe",
+    "widowmaker",
     "baptiste",
-    "juno",
+    "mercy",
   ],
 ]
 `;

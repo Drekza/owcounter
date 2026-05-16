@@ -1,4 +1,4 @@
-import type { Hero, MapDef } from '../domain/types';
+import type { Archetype, Hero, MapDef } from '../domain/types';
 import { archetypeMatchScore } from '../domain/archetypes';
 import type { ScoringData } from '../domain/scoring';
 import heroesJson from './heroes.json';
@@ -6,12 +6,19 @@ import matchupsJson from './matchups.json';
 import synergyJson from './synergy.json';
 import antiSynergyJson from './antiSynergy.json';
 import mapsJson from './maps.json';
+import synergyByArchetypeJson from './synergyByArchetype.json';
 
 export const heroes: Hero[] = (heroesJson.heroes as Hero[]) ?? [];
 export const maps: MapDef[] = (mapsJson.maps as MapDef[]) ?? [];
 export const matchups = matchupsJson.pairs as Record<string, number>;
 export const synergy = synergyJson.pairs as Record<string, number>;
 export const antiSynergy = antiSynergyJson.pairs as Record<string, number>;
+
+export const synergyByArchetype: Partial<Record<Archetype, Record<string, number>>> = {
+  dive: synergyByArchetypeJson.dive ?? {},
+  brawl: synergyByArchetypeJson.brawl ?? {},
+  poke: synergyByArchetypeJson.poke ?? {},
+};
 
 export const heroesById: Map<string, Hero> = new Map(
   heroes.map((h) => [h.id, h]),
@@ -29,6 +36,7 @@ export const scoringData: ScoringData = {
   synergy,
   antiSynergy,
   mapsById,
+  synergyByArchetype,
   archetypeMatchScore: (my, enemy, data) =>
     archetypeMatchScore(my, enemy, data.heroesById),
 };

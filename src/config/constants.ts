@@ -8,3 +8,5 @@ export const SUPPORT_HEAL_PENALTY = {
   hybridAndOff: 0.6,
   twoOff: 1.5,
 } as const;
+
+export const ARCHETYPE_DOMINANT_THRESHOLD = 0.4;

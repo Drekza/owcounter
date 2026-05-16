@@ -230,3 +230,98 @@ describe('scoreComp — support healing rule', () => {
     expect(t!.value).toBe(-SUPPORT_HEAL_PENALTY.twoOff * 0.5);
   });
 });
+
+describe('scoreComp — synergyByArchetype', () => {
+  const ARCH = {
+    dive: { dive: 1, brawl: 0, poke: 0 },
+    brawl: { dive: 0, brawl: 1, poke: 0 },
+    poke: { dive: 0, brawl: 0, poke: 1 },
+  } as const;
+
+  function hero(id: string, role: 'tank' | 'dps' | 'support', archKey: 'dive' | 'brawl' | 'poke'): Hero {
+    return { id, name: id.toUpperCase(), role, archetype: ARCH[archKey] };
+  }
+
+  const divePack: Hero[] = [
+    hero('dt', 'tank', 'dive'),
+    hero('dd1', 'dps', 'dive'),
+    hero('dd2', 'dps', 'dive'),
+    hero('ds1', 'support', 'dive'),
+    hero('ds2', 'support', 'dive'),
+  ];
+  const brawlPack: Hero[] = [
+    hero('bt', 'tank', 'brawl'),
+    hero('bd1', 'dps', 'brawl'),
+    hero('bd2', 'dps', 'brawl'),
+    hero('bs1', 'support', 'brawl'),
+    hero('bs2', 'support', 'brawl'),
+  ];
+
+  function diveComp(): Comp {
+    return compFromIds('dt', ['dd1', 'dd2'], ['ds1', 'ds2']);
+  }
+  function brawlComp(): Comp {
+    return compFromIds('bt', ['bd1', 'bd2'], ['bs1', 'bs2']);
+  }
+
+  it('emits dive-bucket synergy when comp is dive-dominant', () => {
+    const data = buildScoringData({
+      heroes: [...divePack, ...brawlPack],
+      synergyByArchetype: { dive: { 'dd1:ds1': 1 } },
+    });
+    const res = scoreComp(diveComp(), null, { bans: [] }, flatWeights, data);
+    const t = res.terms.find((x) => x.label.includes('(dive)'));
+    expect(t).toBeDefined();
+    expect(t!.value).toBe(1);
+    expect(t!.kind).toBe('synergy');
+  });
+
+  it('skips bucket when comp is below threshold for that archetype', () => {
+    const data = buildScoringData({
+      heroes: [...divePack, ...brawlPack],
+      synergyByArchetype: { dive: { 'bd1:bs1': 1 } },
+    });
+    const res = scoreComp(brawlComp(), null, { bans: [] }, flatWeights, data);
+    expect(res.terms.find((x) => x.label.includes('(dive)'))).toBeUndefined();
+  });
+
+  it('stacks with base synergy as separate terms', () => {
+    const data = buildScoringData({
+      heroes: [...divePack],
+      synergy: { 'dd1:ds1': 1 },
+      synergyByArchetype: { dive: { 'dd1:ds1': 1 } },
+    });
+    const res = scoreComp(diveComp(), null, { bans: [] }, flatWeights, data);
+    const syns = res.terms.filter((x) => x.kind === 'synergy');
+    expect(syns).toHaveLength(2);
+    expect(res.total).toBe(2);
+  });
+
+  it('multiple matching archetypes (mixed comp) apply both buckets', () => {
+    const mixedHero = hero('mh', 'tank', 'dive');
+    mixedHero.archetype = { dive: 0.5, brawl: 0.5, poke: 0 };
+    const others = [
+      { ...hero('a1', 'dps', 'dive'), archetype: { dive: 0.5, brawl: 0.5, poke: 0 } },
+      { ...hero('a2', 'dps', 'dive'), archetype: { dive: 0.5, brawl: 0.5, poke: 0 } },
+      { ...hero('a3', 'support', 'dive'), archetype: { dive: 0.5, brawl: 0.5, poke: 0 } },
+      { ...hero('a4', 'support', 'dive'), archetype: { dive: 0.5, brawl: 0.5, poke: 0 } },
+    ];
+    const data = buildScoringData({
+      heroes: [mixedHero, ...others],
+      synergyByArchetype: {
+        dive: { 'a1:a3': 1 },
+        brawl: { 'a1:a3': 1 },
+      },
+    });
+    const comp = compFromIds('mh', ['a1', 'a2'], ['a3', 'a4']);
+    const res = scoreComp(comp, null, { bans: [] }, flatWeights, data);
+    expect(res.terms.filter((x) => x.kind === 'synergy')).toHaveLength(2);
+    expect(res.total).toBe(2);
+  });
+
+  it('does nothing when synergyByArchetype is absent', () => {
+    const data = buildScoringData({ heroes: [...divePack] });
+    const res = scoreComp(diveComp(), null, { bans: [] }, flatWeights, data);
+    expect(res.terms.filter((x) => x.kind === 'synergy')).toHaveLength(0);
+  });
+});
