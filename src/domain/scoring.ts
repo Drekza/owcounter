@@ -1,3 +1,4 @@
+import { SUPPORT_HEAL_PENALTY } from '../config/constants';
 import type {
   Comp,
   Hero,
@@ -7,6 +8,52 @@ import type {
   Term,
   Weights,
 } from './types';
+
+type SupportHealClass = 'main' | 'hybrid' | 'off';
+
+function classifySupport(h: Hero | undefined): SupportHealClass | null {
+  if (!h || h.role !== 'support') return null;
+  const tags = h.tags ?? [];
+  if (tags.includes('main-healer')) return 'main';
+  if (tags.includes('hybrid-healer')) return 'hybrid';
+  if (tags.includes('off-support')) return 'off';
+  return null;
+}
+
+function supportHealingTerm(
+  my: Comp,
+  weights: Weights,
+  data: ScoringData,
+): Term | null {
+  const s1 = data.heroesById.get(my.support[0]);
+  const s2 = data.heroesById.get(my.support[1]);
+  const c1 = classifySupport(s1);
+  const c2 = classifySupport(s2);
+  if (!c1 || !c2) return null;
+  if (c1 === 'main' || c2 === 'main') return null;
+
+  const hybrids = (c1 === 'hybrid' ? 1 : 0) + (c2 === 'hybrid' ? 1 : 0);
+  let raw: number;
+  let descriptor: string;
+  if (hybrids === 0) {
+    raw = SUPPORT_HEAL_PENALTY.twoOff;
+    descriptor = 'no main healer (off+off)';
+  } else if (hybrids === 1) {
+    raw = SUPPORT_HEAL_PENALTY.hybridAndOff;
+    descriptor = 'weak healing core (hybrid+off)';
+  } else {
+    raw = SUPPORT_HEAL_PENALTY.twoHybrid;
+    descriptor = 'hybrid healers only';
+  }
+
+  const n1 = s1?.name ?? my.support[0];
+  const n2 = s2?.name ?? my.support[1];
+  return {
+    kind: 'antiSyn',
+    label: `${n1} + ${n2}: ${descriptor}: -${raw}`,
+    value: -raw * weights.antiSyn,
+  };
+}
 
 export interface ScoringData {
   heroesById: Map<string, Hero>;
@@ -134,6 +181,9 @@ export function scoreComp(
       });
     }
   }
+
+  const healTerm = supportHealingTerm(my, weights, data);
+  if (healTerm) terms.push(healTerm);
 
   if (enemy && data.archetypeMatchScore) {
     const res = data.archetypeMatchScore(my, enemy, data);

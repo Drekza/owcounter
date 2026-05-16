@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { scoreComp } from '../src/domain/scoring';
-import type { Comp, MapDef, Weights } from '../src/domain/types';
+import type { Comp, Hero, MapDef, Weights } from '../src/domain/types';
 import { buildScoringData, compFromIds, flatWeights } from './fixtures/heroes.fixture';
+import { SUPPORT_HEAL_PENALTY } from '../src/config/constants';
 
 const myComp: Comp = compFromIds('t1', ['d1', 'd2'], ['s1', 's2']);
 const enemyComp: Comp = compFromIds('t2', ['d2', 'd3'], ['s2', 's3']);
@@ -140,5 +141,92 @@ describe('scoreComp', () => {
     const mirror: Comp = compFromIds('t1', ['d1', 'd2'], ['s1', 's2']);
     const res = scoreComp(mirror, mirror, { bans: [] }, flatWeights, data);
     expect(res.terms.find((t) => t.kind === 'antiSyn')?.value).toBe(-1);
+  });
+});
+
+describe('scoreComp — support healing rule', () => {
+  function tagged(id: string, healClass: 'main' | 'hybrid' | 'off'): Hero {
+    const tag =
+      healClass === 'main'
+        ? 'main-healer'
+        : healClass === 'hybrid'
+          ? 'hybrid-healer'
+          : 'off-support';
+    return {
+      id,
+      name: id.toUpperCase(),
+      role: 'support',
+      archetype: { dive: 0.33, brawl: 0.34, poke: 0.33 },
+      tags: [tag],
+    };
+  }
+
+  const tank: Hero = {
+    id: 't1',
+    name: 'T1',
+    role: 'tank',
+    archetype: { dive: 1, brawl: 0, poke: 0 },
+  };
+  const d1: Hero = { ...tank, id: 'd1', name: 'D1', role: 'dps' };
+  const d2: Hero = { ...tank, id: 'd2', name: 'D2', role: 'dps' };
+
+  function dataWith(s1: Hero, s2: Hero) {
+    return buildScoringData({ heroes: [tank, d1, d2, s1, s2] });
+  }
+
+  function comp(s1: string, s2: string): Comp {
+    return compFromIds('t1', ['d1', 'd2'], [s1, s2]);
+  }
+
+  it('no penalty when at least one support is main-healer', () => {
+    const data = dataWith(tagged('mainA', 'main'), tagged('offB', 'off'));
+    const res = scoreComp(comp('mainA', 'offB'), null, { bans: [] }, flatWeights, data);
+    expect(res.terms.find((t) => t.kind === 'antiSyn')).toBeUndefined();
+    expect(res.total).toBe(0);
+  });
+
+  it('penalises two off-supports the most', () => {
+    const data = dataWith(tagged('offA', 'off'), tagged('offB', 'off'));
+    const res = scoreComp(comp('offA', 'offB'), null, { bans: [] }, flatWeights, data);
+    const t = res.terms.find((x) => x.kind === 'antiSyn');
+    expect(t).toBeDefined();
+    expect(t!.value).toBe(-SUPPORT_HEAL_PENALTY.twoOff);
+    expect(t!.label).toContain('no main healer');
+  });
+
+  it('mid penalty for hybrid+off', () => {
+    const data = dataWith(tagged('hyb', 'hybrid'), tagged('off', 'off'));
+    const res = scoreComp(comp('hyb', 'off'), null, { bans: [] }, flatWeights, data);
+    const t = res.terms.find((x) => x.kind === 'antiSyn');
+    expect(t!.value).toBe(-SUPPORT_HEAL_PENALTY.hybridAndOff);
+    expect(t!.label).toContain('weak healing core');
+  });
+
+  it('mild penalty for two hybrid-healers', () => {
+    const data = dataWith(tagged('hybA', 'hybrid'), tagged('hybB', 'hybrid'));
+    const res = scoreComp(comp('hybA', 'hybB'), null, { bans: [] }, flatWeights, data);
+    const t = res.terms.find((x) => x.kind === 'antiSyn');
+    expect(t!.value).toBe(-SUPPORT_HEAL_PENALTY.twoHybrid);
+    expect(t!.label).toContain('hybrid healers only');
+  });
+
+  it('skips rule when supports lack a healing-class tag', () => {
+    const untagged: Hero = {
+      id: 'sx',
+      name: 'SX',
+      role: 'support',
+      archetype: { dive: 1, brawl: 0, poke: 0 },
+    };
+    const data = buildScoringData({ heroes: [tank, d1, d2, untagged] });
+    const res = scoreComp(comp('sx', 'sx'), null, { bans: [] }, flatWeights, data);
+    expect(res.terms.find((t) => t.kind === 'antiSyn')).toBeUndefined();
+  });
+
+  it('penalty respects antiSyn weight', () => {
+    const data = dataWith(tagged('offA', 'off'), tagged('offB', 'off'));
+    const weights: Weights = { ...flatWeights, antiSyn: 0.5 };
+    const res = scoreComp(comp('offA', 'offB'), null, { bans: [] }, weights, data);
+    const t = res.terms.find((x) => x.kind === 'antiSyn');
+    expect(t!.value).toBe(-SUPPORT_HEAL_PENALTY.twoOff * 0.5);
   });
 });

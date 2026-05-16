@@ -7,7 +7,7 @@
       "name": "Ana",
       "role": "support",
       "archetype": { "dive": 0.3, "brawl": 0.4, "poke": 0.3 },
-      "tags": ["hitscan", "sniper", "immobile", "anti-heal", "cc", "low-mobility-support", "dive-target"],
+      "tags": ["hitscan", "sniper", "immobile", "anti-heal", "cc", "low-mobility-support", "dive-target", "main-healer"],
       "portrait": "/heroes/ana.png"
     },
     {
@@ -31,7 +31,7 @@
       "name": "Baptiste",
       "role": "support",
       "archetype": { "dive": 0.05, "brawl": 0.4, "poke": 0.55 },
-      "tags": ["projectile", "burst-damage", "low-mobility-support", "dive-target"],
+      "tags": ["projectile", "burst-damage", "low-mobility-support", "dive-target", "main-healer"],
       "portrait": "/heroes/baptiste.png"
     },
     {
@@ -47,7 +47,7 @@
       "name": "Brigitte",
       "role": "support",
       "archetype": { "dive": 0.1, "brawl": 0.75, "poke": 0.15 },
-      "tags": ["melee", "cc", "mobile-support"],
+      "tags": ["melee", "cc", "mobile-support", "hybrid-healer"],
       "portrait": "/heroes/brigitte.png"
     },
     {
@@ -135,7 +135,7 @@
       "name": "Illari",
       "role": "support",
       "archetype": { "dive": 0.05, "brawl": 0.05, "poke": 0.9 },
-      "tags": ["hitscan", "sniper", "burst-damage", "low-mobility-support", "dive-target"],
+      "tags": ["hitscan", "sniper", "burst-damage", "low-mobility-support", "dive-target", "main-healer"],
       "portrait": "/heroes/illari.png"
     },
     {
@@ -143,7 +143,7 @@
       "name": "Jetpack Cat",
       "role": "support",
       "archetype": { "dive": 0.7, "brawl": 0.2, "poke": 0.1 },
-      "tags": ["projectile", "mobile-support", "mobile", "aoe"],
+      "tags": ["projectile", "mobile-support", "mobile", "aoe", "hybrid-healer"],
       "portrait": "/heroes/jetpack-cat.png"
     },
     {
@@ -167,7 +167,7 @@
       "name": "Juno",
       "role": "support",
       "archetype": { "dive": 0.55, "brawl": 0.25, "poke": 0.2 },
-      "tags": ["projectile", "mobile-support", "mobile"],
+      "tags": ["projectile", "mobile-support", "mobile", "main-healer"],
       "portrait": "/heroes/juno.png"
     },
     {
@@ -175,7 +175,7 @@
       "name": "Kiriko",
       "role": "support",
       "archetype": { "dive": 0.5, "brawl": 0.4, "poke": 0.1 },
-      "tags": ["projectile", "mobile-support", "mobile", "pocket-support"],
+      "tags": ["projectile", "mobile-support", "mobile", "pocket-support", "main-healer"],
       "portrait": "/heroes/kiriko.png"
     },
     {
@@ -183,7 +183,7 @@
       "name": "Lifeweaver",
       "role": "support",
       "archetype": { "dive": 0.1, "brawl": 0.4, "poke": 0.5 },
-      "tags": ["projectile", "low-mobility-support", "dive-target", "pocket-support"],
+      "tags": ["projectile", "low-mobility-support", "dive-target", "pocket-support", "main-healer"],
       "portrait": "/heroes/lifeweaver.png"
     },
     {
@@ -191,7 +191,7 @@
       "name": "Lúcio",
       "role": "support",
       "archetype": { "dive": 0.6, "brawl": 0.4, "poke": 0.0 },
-      "tags": ["projectile", "mobile-support", "mobile", "aoe", "cc"],
+      "tags": ["projectile", "mobile-support", "mobile", "aoe", "cc", "off-support"],
       "portrait": "/heroes/lucio.png"
     },
     {
@@ -215,7 +215,7 @@
       "name": "Mercy",
       "role": "support",
       "archetype": { "dive": 0.6, "brawl": 0.2, "poke": 0.2 },
-      "tags": ["projectile", "mobile-support", "mobile", "pocket-support"],
+      "tags": ["projectile", "mobile-support", "mobile", "pocket-support", "main-healer"],
       "portrait": "/heroes/mercy.png"
     },
     {
@@ -223,7 +223,7 @@
       "name": "Mizuki",
       "role": "support",
       "archetype": { "dive": 0.5, "brawl": 0.4, "poke": 0.1 },
-      "tags": ["projectile", "mobile-support", "mobile", "cc", "aoe"],
+      "tags": ["projectile", "mobile-support", "mobile", "cc", "aoe", "hybrid-healer"],
       "portrait": "/heroes/mizuki.png"
     },
     {
@@ -231,7 +231,7 @@
       "name": "Moira",
       "role": "support",
       "archetype": { "dive": 0.5, "brawl": 0.4, "poke": 0.1 },
-      "tags": ["mobile-support", "mobile", "anti-heal", "sustain-damage"],
+      "tags": ["mobile-support", "mobile", "anti-heal", "sustain-damage", "main-healer"],
       "portrait": "/heroes/moira.png"
     },
     {
@@ -391,7 +391,7 @@
       "name": "Wuyang",
       "role": "support",
       "archetype": { "dive": 0.1, "brawl": 0.2, "poke": 0.7 },
-      "tags": ["projectile", "mobile-support", "mobile"],
+      "tags": ["projectile", "mobile-support", "mobile", "hybrid-healer"],
       "portrait": "/heroes/wuyang.png"
     },
     {
@@ -407,7 +407,7 @@
       "name": "Zenyatta",
       "role": "support",
       "archetype": { "dive": 0.05, "brawl": 0.1, "poke": 0.85 },
-      "tags": ["projectile", "immobile", "dive-target", "burst-damage", "anti-heal", "low-mobility-support"],
+      "tags": ["projectile", "immobile", "dive-target", "burst-damage", "anti-heal", "low-mobility-support", "off-support"],
       "portrait": "/heroes/zenyatta.png"
     }
   ]
