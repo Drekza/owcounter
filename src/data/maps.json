@@ -15,7 +15,7 @@
       "name": "Busan",
       "mode": "control",
       "overrides": {
-        "archetypePref": { "dive": 0.5, "poke": -0.2 }
+        "archetypePref": { "brawl": 0.7, "dive": 0.4, "poke": -0.6 }
       }
     },
     {
@@ -23,7 +23,7 @@
       "name": "Ilios",
       "mode": "control",
       "overrides": {
-        "archetypePref": { "dive": 0.5, "brawl": 0.2, "poke": -0.3 }
+        "archetypePref": { "dive": 0.4, "brawl": 0.4, "poke": 0.5 }
       }
     },
     {
@@ -36,7 +36,7 @@
           "ana:winston": -2,
           "tracer:zenyatta": 2
         },
-        "archetypePref": { "dive": 0.8, "brawl": -0.4 }
+        "archetypePref": { "brawl": 0.7, "poke": -0.3, "dive": 0.5 }
       }
     },
     {
@@ -49,7 +49,7 @@
           "tracer:zenyatta": 2,
           "ana:winston": -2
         },
-        "archetypePref": { "dive": 0.7, "brawl": -0.3 }
+        "archetypePref": { "brawl": 0.5, "poke": 0.2, "dive": 0.4}
       }
     },
     {
@@ -57,7 +57,7 @@
       "name": "Oasis",
       "mode": "control",
       "overrides": {
-        "archetypePref": { "brawl": 0.4, "poke": 0.3 }
+        "archetypePref": { "brawl": 0.0, "poke": 0.6, "dive": 0.5 }
       }
     },
     {
@@ -65,7 +65,7 @@
       "name": "Samoa",
       "mode": "control",
       "overrides": {
-        "archetypePref": { "dive": 0.5, "brawl": 0.3 }
+        "archetypePref": { "brawl": 0.6, "poke": -0.2, "dive": 0.6 }
       }
     },
 
@@ -77,7 +77,7 @@
         "antiSynergy": {
           "hanzo:widowmaker": 0
         },
-        "archetypePref": { "poke": 1.0, "brawl": -0.5 }
+        "archetypePref": { "brawl": -0.5, "poke": 0.9, "dive": 0.1}
       }
     },
     {
@@ -88,7 +88,7 @@
         "antiSynergy": {
           "hanzo:widowmaker": 0
         },
-        "archetypePref": { "brawl": 0.7, "poke": -0.3 }
+        "archetypePref": { "brawl": -0.2, "poke": 0.3, "dive": 0.7 }
       }
     },
     {
@@ -105,7 +105,7 @@
         "antiSynergy": {
           "hanzo:widowmaker": 0
         },
-        "archetypePref": { "poke": 0.6, "brawl": -0.2 },
+        "archetypePref": { "brawl": 0.4, "poke": 0.5, "dive": 0.5 },
         "bySide": {
           "defense": {
             "matchups": {
@@ -132,7 +132,7 @@
         "antiSynergy": {
           "hanzo:widowmaker": 0
         },
-        "archetypePref": { "poke": 0.8, "brawl": -0.3 },
+        "archetypePref": { "brawl": -0.1, "poke": 0.6, "dive": 0.3 },
         "bySide": {
           "defense": {
             "matchups": {
@@ -155,7 +155,15 @@
         "antiSynergy": {
           "hanzo:widowmaker": 0
         },
-        "archetypePref": { "brawl": 0.6, "poke": -0.3 }
+        "archetypePref": { "brawl": 0.2, "poke": 0.4, "dive": 0.4 },
+        "bySide": {
+          "attack": {
+            "archetypePref": { "brawl": 0.2, "poke": 0.4, "dive": 0.5 }
+          },
+          "defense": {
+            "archetypePref": { "brawl": 0.4, "poke": 0.4, "dive": 0.2 }
+          }
+        }
       }
     },
     {
@@ -166,7 +174,7 @@
         "antiSynergy": {
           "hanzo:widowmaker": 0
         },
-        "archetypePref": { "brawl": 0.7, "poke": -0.3 }
+        "archetypePref": { "brawl": 0.7, "poke": -0.2, "dive": 0.1 }
       }
     },
     {
@@ -174,7 +182,7 @@
       "name": "Shambali Monastery",
       "mode": "escort",
       "overrides": {
-        "archetypePref": { "brawl": 0.5, "dive": 0.2 }
+        "archetypePref": { "brawl": 0.5, "dive": 0.4, "poke": -0.1 }
       }
     },
     {
@@ -185,7 +193,15 @@
         "antiSynergy": {
           "hanzo:widowmaker": 0
         },
-        "archetypePref": { "brawl": 0.5, "dive": 0.3 }
+        "archetypePref": { "brawl": 0.1, "poke": 0.6, "dive": 0.3 },
+        "bySide": {
+          "attack": {
+            "archetypePref": { "brawl": 0.3, "poke": 0.4, "dive": 0.4 }
+          },
+          "defense": {
+            "archetypePref": { "brawl": 0.0, "poke": 0.7, "dive": 0.2 }
+          }
+        }
       }
     },
 
@@ -194,7 +210,7 @@
       "name": "Blizzard World",
       "mode": "hybrid",
       "overrides": {
-        "archetypePref": { "brawl": 0.7, "poke": -0.3 }
+        "archetypePref": { "brawl": 0.7, "poke": -0.3, "dive": 0.1 }
       }
     },
     {
@@ -206,7 +222,7 @@
           "winston:ana": 2,
           "tracer:zenyatta": 2
         },
-        "archetypePref": { "brawl": 0.9, "poke": -0.5 },
+        "archetypePref": { "brawl": 0.9, "poke": -0.5, "dive": -0.1 },
         "bySide": {
           "attack": {
             "archetypePref": { "brawl": 0.6, "dive": 0.3, "poke": -0.4 }
@@ -217,7 +233,7 @@
               "bastion:winston": 1,
               "reaper:reinhardt": 1
             },
-            "archetypePref": { "brawl": 1.0, "poke": -0.5 }
+            "archetypePref": { "brawl": 1.0, "poke": -0.5, "dive": -0.2 }
           }
         }
       }
@@ -231,14 +247,17 @@
           "winston:ana": 2,
           "tracer:zenyatta": 2
         },
-        "archetypePref": { "brawl": 0.7, "poke": -0.2 },
+        "archetypePref": { "brawl": 0.7, "poke": -0.2, "dive": 0.2 },
         "bySide": {
+          "attack": {
+            "archetypePref": { "brawl": 0.5, "poke": -0.1, "dive": 0.4 }
+          },
           "defense": {
             "matchups": {
               "bastion:reinhardt": 2,
               "reaper:reinhardt": 1
             },
-            "archetypePref": { "brawl": 0.8, "poke": -0.2 }
+            "archetypePref": { "brawl": 0.8, "poke": -0.2, "dive": 0.1 }
           }
         }
       }
@@ -251,7 +270,7 @@
         "matchups": {
           "reinhardt:reaper": 0
         },
-        "archetypePref": { "brawl": 0.8, "poke": -0.3 },
+        "archetypePref": { "brawl": 0.8, "poke": -0.3, "dive": 0.1 },
         "bySide": {
           "attack": {
             "archetypePref": { "brawl": 0.5, "dive": 0.4, "poke": -0.3 }
@@ -261,7 +280,7 @@
               "bastion:reinhardt": 2,
               "reaper:reinhardt": 1
             },
-            "archetypePref": { "brawl": 0.9, "poke": -0.3 }
+            "archetypePref": { "brawl": 0.9, "poke": -0.3, "dive": -0.1 }
           }
         }
       }
@@ -274,7 +293,7 @@
         "antiSynergy": {
           "hanzo:widowmaker": 0
         },
-        "archetypePref": { "poke": 0.6, "brawl": -0.2 }
+        "archetypePref": { "poke": 0.6, "brawl": -0.2, "dive": 0.2 }
       }
     },
     {
@@ -286,13 +305,17 @@
           "pharah:cassidy": -1,
           "pharah:sojourn": -1
         },
-        "archetypePref": { "brawl": 0.5, "dive": 0.3 },
+        "archetypePref": { "brawl": 0.3, "dive": 0.5, "poke": 0.1 },
         "bySide": {
+          "attack": {
+            "archetypePref": { "brawl": 0.2, "dive": 0.6, "poke": 0.1 }
+          },
           "defense": {
             "matchups": {
               "pharah:cassidy": -2,
               "pharah:sojourn": -2
-            }
+            },
+            "archetypePref": { "brawl": 0.4, "dive": 0.4, "poke": 0.1 }
           }
         }
       }
@@ -307,14 +330,18 @@
           "pharah:sojourn": -1,
           "pharah:ashe": -1
         },
-        "archetypePref": { "brawl": 0.6, "poke": -0.2 },
+        "archetypePref": { "brawl": 0.5, "poke": -0.1, "dive": 0.3 },
         "bySide": {
+          "attack": {
+            "archetypePref": { "brawl": 0.4, "poke": 0.0, "dive": 0.4 }
+          },
           "defense": {
             "matchups": {
               "pharah:cassidy": -2,
               "pharah:sojourn": -2,
               "pharah:ashe": -2
-            }
+            },
+            "archetypePref": { "brawl": 0.6, "poke": -0.2, "dive": 0.2 }
           }
         }
       }
@@ -325,7 +352,7 @@
       "name": "Colosseo",
       "mode": "push",
       "overrides": {
-        "archetypePref": { "brawl": 0.5, "poke": 0.2 }
+        "archetypePref": { "brawl": 0.4, "poke": 0.3, "dive": 0.4 }
       }
     },
     {
@@ -336,7 +363,7 @@
         "antiSynergy": {
           "hanzo:widowmaker": 0
         },
-        "archetypePref": { "poke": 0.5, "brawl": -0.2 }
+        "archetypePref": { "poke": 0.5, "brawl": -0.2, "dive": 0.3 }
       }
     },
     {
@@ -344,7 +371,7 @@
       "name": "New Queen Street",
       "mode": "push",
       "overrides": {
-        "archetypePref": { "brawl": 0.6, "poke": -0.2 }
+        "archetypePref": { "brawl": 0.5, "poke": 0.1, "dive": 0.2 }
       }
     },
     {
@@ -352,7 +379,7 @@
       "name": "Runasapi",
       "mode": "push",
       "overrides": {
-        "archetypePref": { "poke": 0.4, "brawl": 0.3 }
+        "archetypePref": { "poke": 0.2, "brawl": 0.4, "dive": 0.4 }
       }
     },
 
@@ -361,7 +388,7 @@
       "name": "Aatlis",
       "mode": "flashpoint",
       "overrides": {
-        "archetypePref": { "dive": 0.5, "brawl": -0.2 }
+        "archetypePref": { "dive": 0.5, "brawl": -0.1, "poke": 0.3 }
       }
     },
     {
@@ -374,7 +401,7 @@
           "pharah:sojourn": -1,
           "pharah:soldier-76": 0
         },
-        "archetypePref": { "dive": 0.5, "poke": 0.2, "brawl": -0.3 }
+        "archetypePref": { "dive": 0.5, "poke": 0.2, "brawl": -0.2 }
       }
     },
     {
@@ -382,7 +409,7 @@
       "name": "Suravasa",
       "mode": "flashpoint",
       "overrides": {
-        "archetypePref": { "dive": 0.4, "brawl": 0.3 }
+        "archetypePref": { "dive": 0.4, "brawl": 0.4, "poke": 0.2 }
       }
     },
 
@@ -391,7 +418,7 @@
       "name": "Hanaoka",
       "mode": "clash",
       "overrides": {
-        "archetypePref": { "brawl": 0.6, "poke": -0.2 }
+        "archetypePref": { "brawl": 0.4, "poke": -0.1, "dive": 0.5 }
       }
     },
     {
@@ -402,7 +429,7 @@
         "antiSynergy": {
           "hanzo:widowmaker": 0
         },
-        "archetypePref": { "poke": 0.5, "brawl": -0.2 }
+        "archetypePref": { "poke": 0.4, "brawl": -0.1, "dive": 0.3 }
       }
     }
   ]
