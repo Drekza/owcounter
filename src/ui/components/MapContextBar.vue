@@ -1,18 +1,22 @@
 <script lang="ts">
+import type { Side } from '../../domain/types';
+
 export interface MapCtxState {
   enabled: boolean;
   mapId: string | null;
+  side: Side | null;
 }
 
 export const EMPTY_MAP_CTX: MapCtxState = {
   enabled: false,
   mapId: null,
+  side: null,
 };
 </script>
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import type { MapDef, MapMode } from '../../domain/types';
+import { ASYMMETRIC_MODES, type MapDef, type MapMode } from '../../domain/types';
 
 const MODE_LABELS: Record<MapMode, string> = {
   control: 'Control',
@@ -78,20 +82,41 @@ const mapsForMode = computed(() => {
     .sort((a, b) => a.name.localeCompare(b.name));
 });
 
+const supportsSide = computed(() =>
+  currentMode.value ? ASYMMETRIC_MODES.has(currentMode.value) : false,
+);
+
+watch(supportsSide, (yes) => {
+  if (!yes && props.modelValue.side !== null) {
+    emit('update:modelValue', { ...props.modelValue, side: null });
+  }
+});
+
 function onToggle(e: Event) {
   const enabled = (e.target as HTMLInputElement).checked;
-  emit('update:modelValue', { enabled, mapId: null });
+  emit('update:modelValue', { enabled, mapId: null, side: null });
 }
 
 function onModeChange(e: Event) {
   const value = (e.target as HTMLSelectElement).value;
   internalMode.value = value ? (value as MapMode) : null;
-  emit('update:modelValue', { enabled: true, mapId: null });
+  const nextSide =
+    value && ASYMMETRIC_MODES.has(value as MapMode) ? props.modelValue.side : null;
+  emit('update:modelValue', { enabled: true, mapId: null, side: nextSide });
 }
 
 function onMapChange(e: Event) {
   const value = (e.target as HTMLSelectElement).value;
-  emit('update:modelValue', { enabled: true, mapId: value || null });
+  emit('update:modelValue', {
+    enabled: true,
+    mapId: value || null,
+    side: supportsSide.value ? props.modelValue.side : null,
+  });
+}
+
+function setSide(side: Side | null) {
+  if (props.modelValue.side === side) return;
+  emit('update:modelValue', { ...props.modelValue, side });
 }
 </script>
 
@@ -109,7 +134,9 @@ function onMapChange(e: Event) {
       />
       <span class="font-semibold">Map context</span>
       <span v-if="selectedMap" class="text-slate-400">
-        · {{ selectedMap.name }}
+        · {{ selectedMap.name }}<template v-if="modelValue.side">
+          · {{ modelValue.side === 'attack' ? 'Attack' : 'Defense' }}
+        </template>
       </span>
     </label>
 
@@ -137,6 +164,41 @@ function onMapChange(e: Event) {
           {{ m.name }}
         </option>
       </select>
+      <div
+        v-if="supportsSide"
+        class="flex items-center text-xs rounded-md border border-slate-700/60 bg-slate-base/60 overflow-hidden"
+        role="group"
+        aria-label="Side"
+      >
+        <button
+          type="button"
+          class="px-2.5 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-ow-orange/60"
+          :class="modelValue.side === null ? 'bg-slate-700/60 text-slate-100' : 'text-slate-400 hover:text-slate-200'"
+          :aria-pressed="modelValue.side === null"
+          title="Any side"
+          @click="setSide(null)"
+        >
+          Any
+        </button>
+        <button
+          type="button"
+          class="px-2.5 py-1.5 border-l border-slate-700/60 transition focus:outline-none focus:ring-2 focus:ring-ow-orange/60"
+          :class="modelValue.side === 'attack' ? 'bg-ow-orange/30 text-slate-100' : 'text-slate-400 hover:text-slate-200'"
+          :aria-pressed="modelValue.side === 'attack'"
+          @click="setSide('attack')"
+        >
+          Attack
+        </button>
+        <button
+          type="button"
+          class="px-2.5 py-1.5 border-l border-slate-700/60 transition focus:outline-none focus:ring-2 focus:ring-ow-orange/60"
+          :class="modelValue.side === 'defense' ? 'bg-ow-orange/30 text-slate-100' : 'text-slate-400 hover:text-slate-200'"
+          :aria-pressed="modelValue.side === 'defense'"
+          @click="setSide('defense')"
+        >
+          Defense
+        </button>
+      </div>
     </template>
   </div>
 </template>

@@ -94,6 +94,180 @@ describe('scoreComp', () => {
     expect(res.terms[0].value).toBe(-2);
   });
 
+  it('side override beats map override beats global (matchups)', () => {
+    const map: MapDef = {
+      id: 'M',
+      name: 'Map',
+      mode: 'escort',
+      overrides: {
+        matchups: { 't1:t2': 1 },
+        bySide: { defense: { matchups: { 't1:t2': -1 } } },
+      },
+    };
+    const data = buildScoringData({
+      matchups: { 't1:t2': 2 },
+      maps: [map],
+    });
+
+    const noMap = scoreComp(myComp, enemyComp, { bans: [] }, flatWeights, data);
+    expect(noMap.total).toBe(2);
+
+    const mapNoSide = scoreComp(
+      myComp,
+      enemyComp,
+      { bans: [], mapId: 'M' },
+      flatWeights,
+      data,
+    );
+    expect(mapNoSide.total).toBe(1);
+
+    const attack = scoreComp(
+      myComp,
+      enemyComp,
+      { bans: [], mapId: 'M', side: 'attack' },
+      flatWeights,
+      data,
+    );
+    expect(attack.total).toBe(1);
+
+    const defense = scoreComp(
+      myComp,
+      enemyComp,
+      { bans: [], mapId: 'M', side: 'defense' },
+      flatWeights,
+      data,
+    );
+    expect(defense.total).toBe(-1);
+  });
+
+  it('side override beats map override beats global (anti-synergy)', () => {
+    const map: MapDef = {
+      id: 'M',
+      name: 'Map',
+      mode: 'escort',
+      overrides: {
+        antiSynergy: { 'd1:s1': 0 },
+        bySide: { attack: { antiSynergy: { 'd1:s1': 2 } } },
+      },
+    };
+    const data = buildScoringData({
+      antiSynergy: { 'd1:s1': 1 },
+      maps: [map],
+    });
+
+    const mapNoSide = scoreComp(
+      myComp,
+      enemyComp,
+      { bans: [], mapId: 'M' },
+      flatWeights,
+      data,
+    );
+    expect(mapNoSide.terms.find((t) => t.kind === 'antiSyn')).toBeUndefined();
+
+    const attack = scoreComp(
+      myComp,
+      enemyComp,
+      { bans: [], mapId: 'M', side: 'attack' },
+      flatWeights,
+      data,
+    );
+    expect(attack.terms.find((t) => t.kind === 'antiSyn')?.value).toBe(-2);
+
+    const defense = scoreComp(
+      myComp,
+      enemyComp,
+      { bans: [], mapId: 'M', side: 'defense' },
+      flatWeights,
+      data,
+    );
+    expect(defense.terms.find((t) => t.kind === 'antiSyn')).toBeUndefined();
+  });
+
+  it('emits map archetype term proportional to comp profile × pref × bias', () => {
+    const map: MapDef = {
+      id: 'M',
+      name: 'Map',
+      mode: 'escort',
+      overrides: { archetypePref: { poke: 1.0, brawl: -0.5 } },
+    };
+    const data = buildScoringData({ maps: [map] });
+    const pokeComp = compFromIds('t3', ['d3', 'd3'], ['s3', 's3']);
+    const res = scoreComp(
+      pokeComp,
+      null,
+      { bans: [], mapId: 'M' },
+      flatWeights,
+      data,
+    );
+    const t = res.terms.find((x) => x.kind === 'archetype');
+    expect(t).toBeDefined();
+    expect(t!.value).toBeCloseTo(3.0, 5);
+    expect(t!.label).toContain('+poke');
+    expect(t!.label).toContain('-brawl');
+  });
+
+  it('map archetype term: side block beats map block', () => {
+    const map: MapDef = {
+      id: 'M',
+      name: 'Map',
+      mode: 'hybrid',
+      overrides: {
+        archetypePref: { brawl: 1.0 },
+        bySide: { attack: { archetypePref: { dive: 1.0 } } },
+      },
+    };
+    const data = buildScoringData({ maps: [map] });
+    const diveComp = compFromIds('t1', ['d1', 'd1'], ['s1', 's1']);
+
+    const mapOnly = scoreComp(diveComp, null, { bans: [], mapId: 'M' }, flatWeights, data);
+    expect(mapOnly.terms.find((t) => t.kind === 'archetype')).toBeUndefined();
+
+    const attack = scoreComp(
+      diveComp,
+      null,
+      { bans: [], mapId: 'M', side: 'attack' },
+      flatWeights,
+      data,
+    );
+    expect(attack.terms.find((t) => t.kind === 'archetype')!.value).toBeCloseTo(3.0, 5);
+  });
+
+  it('map archetype term omitted when no map or no pref', () => {
+    const noPrefMap: MapDef = { id: 'M', name: 'M', mode: 'control' };
+    const data = buildScoringData({ maps: [noPrefMap] });
+    const pokeComp = compFromIds('t3', ['d3', 'd3'], ['s3', 's3']);
+    const noMap = scoreComp(pokeComp, null, { bans: [] }, flatWeights, data);
+    expect(noMap.terms.find((t) => t.kind === 'archetype')).toBeUndefined();
+    const withMap = scoreComp(pokeComp, null, { bans: [], mapId: 'M' }, flatWeights, data);
+    expect(withMap.terms.find((t) => t.kind === 'archetype')).toBeUndefined();
+  });
+
+  it('side override falls back to map block when side has no entry for that key', () => {
+    const map: MapDef = {
+      id: 'M',
+      name: 'Map',
+      mode: 'escort',
+      overrides: {
+        matchups: { 't1:t2': -1, 'd1:d3': 1 },
+        bySide: { defense: { matchups: { 't1:t2': 2 } } },
+      },
+    };
+    const data = buildScoringData({
+      matchups: { 't1:t2': 0, 'd1:d3': 0 },
+      maps: [map],
+    });
+    const res = scoreComp(
+      myComp,
+      enemyComp,
+      { bans: [], mapId: 'M', side: 'defense' },
+      flatWeights,
+      data,
+    );
+    const pair = res.terms.filter((t) => t.kind === 'pair');
+    expect(pair).toHaveLength(2);
+    expect(res.total).toBe(3);
+  });
+
   it('includes archetype term with sign and label from injected fn', () => {
     const data = buildScoringData({
       archetypeMatchScore: () => ({ value: 0.42, label: 'arch+' }),

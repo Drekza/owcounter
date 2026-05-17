@@ -1,4 +1,8 @@
-import { ARCHETYPE_DOMINANT_THRESHOLD, SUPPORT_HEAL_PENALTY } from '../config/constants';
+import {
+  ARCHETYPE_DOMINANT_THRESHOLD,
+  MAP_ARCHETYPE_BIAS,
+  SUPPORT_HEAL_PENALTY,
+} from '../config/constants';
 import { compArchetypeProfile } from './archetypes';
 import type {
   Archetype,
@@ -7,6 +11,7 @@ import type {
   MapDef,
   MatchupCtx,
   ScoreResult,
+  Side,
   Term,
   Weights,
 } from './types';
@@ -93,12 +98,20 @@ function lookupPair(
   my: string,
   enemy: string,
   mapId: string | undefined,
+  side: Side | undefined,
   data: ScoringData,
 ): number {
   const key = `${my}:${enemy}`;
   if (mapId) {
-    const ov = data.mapsById.get(mapId)?.overrides?.matchups?.[key];
-    if (ov !== undefined) return ov;
+    const overrides = data.mapsById.get(mapId)?.overrides;
+    if (overrides) {
+      if (side) {
+        const sideOv = overrides.bySide?.[side]?.matchups?.[key];
+        if (sideOv !== undefined) return sideOv;
+      }
+      const ov = overrides.matchups?.[key];
+      if (ov !== undefined) return ov;
+    }
   }
   return data.matchups[key] ?? 0;
 }
@@ -125,16 +138,70 @@ function lookupAntiSyn(
   a: string,
   b: string,
   mapId: string | undefined,
+  side: Side | undefined,
   data: ScoringData,
 ): number {
   if (mapId) {
-    const overrides = data.mapsById.get(mapId)?.overrides?.antiSynergy;
+    const overrides = data.mapsById.get(mapId)?.overrides;
     if (overrides) {
-      const ov = lookupUnordered(overrides, a, b);
-      if (ov !== undefined) return ov;
+      if (side) {
+        const sideTable = overrides.bySide?.[side]?.antiSynergy;
+        if (sideTable) {
+          const sideOv = lookupUnordered(sideTable, a, b);
+          if (sideOv !== undefined) return sideOv;
+        }
+      }
+      if (overrides.antiSynergy) {
+        const ov = lookupUnordered(overrides.antiSynergy, a, b);
+        if (ov !== undefined) return ov;
+      }
     }
   }
   return lookupUnordered(data.antiSynergy, a, b) ?? 0;
+}
+
+function resolveArchetypePref(
+  mapId: string | undefined,
+  side: Side | undefined,
+  data: ScoringData,
+): Partial<Record<Archetype, number>> | undefined {
+  if (!mapId) return undefined;
+  const overrides = data.mapsById.get(mapId)?.overrides;
+  if (!overrides) return undefined;
+  if (side) {
+    const sidePref = overrides.bySide?.[side]?.archetypePref;
+    if (sidePref) return sidePref;
+  }
+  return overrides.archetypePref;
+}
+
+function mapArchetypeTerm(
+  my: Comp,
+  mapId: string | undefined,
+  side: Side | undefined,
+  weights: Weights,
+  data: ScoringData,
+): Term | null {
+  const pref = resolveArchetypePref(mapId, side, data);
+  if (!pref) return null;
+  const profile = compArchetypeProfile(my, data.heroesById);
+  let raw = 0;
+  const parts: string[] = [];
+  for (const a of ['dive', 'brawl', 'poke'] as const) {
+    const w = pref[a];
+    if (w === undefined || w === 0) continue;
+    raw += w * profile[a];
+    if (w > 0) parts.push(`+${a}`);
+    else parts.push(`-${a}`);
+  }
+  const value = raw * MAP_ARCHETYPE_BIAS * weights.mapArchetype;
+  if (value === 0) return null;
+  const arrow = value > 0 ? '+' : '';
+  const label =
+    value > 0
+      ? `Map favors comp (${parts.join('/')}): ${arrow}${value.toFixed(2)}`
+      : `Map disfavors comp (${parts.join('/')}): ${value.toFixed(2)}`;
+  return { kind: 'archetype', label, value };
 }
 
 export function scoreComp(
@@ -147,12 +214,13 @@ export function scoreComp(
   const terms: Term[] = [];
   const myHeroes = compHeroes(my);
   const mapId = ctx.mapId;
+  const side = ctx.side;
 
   if (enemy) {
     const enemyHeroes = compHeroes(enemy);
     for (const myId of myHeroes) {
       for (const enId of enemyHeroes) {
-        const raw = lookupPair(myId, enId, mapId, data);
+        const raw = lookupPair(myId, enId, mapId, side, data);
         if (raw === 0) continue;
         terms.push({
           kind: 'pair',
@@ -181,7 +249,7 @@ export function scoreComp(
     for (let j = i + 1; j < myHeroes.length; j++) {
       const a = myHeroes[i];
       const b = myHeroes[j];
-      const raw = lookupAntiSyn(a, b, mapId, data);
+      const raw = lookupAntiSyn(a, b, mapId, side, data);
       if (raw === 0) continue;
       terms.push({
         kind: 'antiSyn',
@@ -231,6 +299,9 @@ export function scoreComp(
       });
     }
   }
+
+  const mapTerm = mapArchetypeTerm(my, mapId, side, weights, data);
+  if (mapTerm) terms.push(mapTerm);
 
   let total = 0;
   for (const t of terms) total += t.value;

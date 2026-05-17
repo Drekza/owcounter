@@ -2,11 +2,12 @@ import { computed, ref, watch } from 'vue';
 import type { Comp, MatchupCtx, Suggestion } from '../domain/types';
 import type { TeamState } from '../ui/components/TeamPicker.vue';
 import type { MapCtxState } from '../ui/components/MapContextBar.vue';
-import { topKCounters, type LockedSlots } from '../domain/search';
-import { generateExplanation, type Reasoning } from '../domain/reasoning';
-import { DEFAULT_WEIGHTS } from '../config/weights';
-import { DEBOUNCE_MS, TOP_K } from '../config/constants';
-import { heroesById, scoringData } from '../data';
+import type { LockedSlots } from '../domain/search';
+import type { Reasoning } from '../domain/reasoning';
+import { DEBOUNCE_MS } from '../config/constants';
+import { heroesById } from '../data';
+import ComputeWorker from './compute.worker?worker';
+import type { ComputeRequest, ComputeResponse } from './compute.worker';
 
 function teamIds(s: TeamState): string[] {
   return [s.tank, s.dps[0], s.dps[1], s.support[0], s.support[1]].filter(
@@ -26,7 +27,7 @@ export function useAppState() {
     support: [null, null],
   });
   const bans = ref<string[]>([]);
-  const mapCtx = ref<MapCtxState>({ enabled: false, mapId: null });
+  const mapCtx = ref<MapCtxState>({ enabled: false, mapId: null, side: null });
 
   const enemyComp = computed<Comp | null>(() => {
     const e = enemy.value;
@@ -50,6 +51,10 @@ export function useAppState() {
 
   const ctx = computed<MatchupCtx>(() => ({
     mapId: mapCtx.value.enabled ? mapCtx.value.mapId ?? undefined : undefined,
+    side:
+      mapCtx.value.enabled && mapCtx.value.mapId
+        ? mapCtx.value.side ?? undefined
+        : undefined,
     bans: bans.value,
   }));
 
@@ -78,29 +83,42 @@ export function useAppState() {
       myPickIds.value.length > 0,
   );
 
+  const worker = new ComputeWorker();
+  let nextRequestId = 1;
+  let activeRequestId = 0;
   let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
-  function runCompute() {
-    if (!hasComputeInput.value) {
-      suggestions.value = [];
-      reasonings.value = [];
-      return;
-    }
-    const sugs = topKCounters(
-      enemyComp.value,
-      ctx.value,
-      TOP_K,
-      DEFAULT_WEIGHTS,
-      scoringData,
-      locked.value,
-    );
-    suggestions.value = sugs;
-    reasonings.value = sugs.map((s) => generateExplanation(s.breakdown));
+  worker.onmessage = (e: MessageEvent<ComputeResponse>) => {
+    if (e.data.id !== activeRequestId) return;
+    suggestions.value = e.data.suggestions;
+    reasonings.value = e.data.reasonings;
+    isComputing.value = false;
+  };
+
+  function dispatchCompute() {
+    activeRequestId = nextRequestId++;
+    const e = enemyComp.value;
+    const c = ctx.value;
+    const l = locked.value;
+    const req: ComputeRequest = {
+      id: activeRequestId,
+      enemy: e
+        ? { tank: e.tank, dps: [e.dps[0], e.dps[1]], support: [e.support[0], e.support[1]] }
+        : null,
+      ctx: { mapId: c.mapId, side: c.side, bans: [...c.bans] },
+      locked: {
+        tank: l.tank ?? null,
+        dps: [l.dps?.[0] ?? null, l.dps?.[1] ?? null],
+        support: [l.support?.[0] ?? null, l.support?.[1] ?? null],
+      },
+    };
+    worker.postMessage(req);
   }
 
   function scheduleCompute() {
     if (debounceTimer !== null) clearTimeout(debounceTimer);
     if (!hasComputeInput.value) {
+      activeRequestId = 0;
       isComputing.value = false;
       suggestions.value = [];
       reasonings.value = [];
@@ -109,10 +127,7 @@ export function useAppState() {
     isComputing.value = true;
     debounceTimer = setTimeout(() => {
       debounceTimer = null;
-      requestAnimationFrame(() => {
-        runCompute();
-        isComputing.value = false;
-      });
+      dispatchCompute();
     }, DEBOUNCE_MS);
   }
 
@@ -122,7 +137,7 @@ export function useAppState() {
     enemy.value = { tank: null, dps: [null, null], support: [null, null] };
     myPicks.value = { tank: null, dps: [null, null], support: [null, null] };
     bans.value = [];
-    mapCtx.value = { enabled: false, mapId: null };
+    mapCtx.value = { enabled: false, mapId: null, side: null };
   }
 
   return {

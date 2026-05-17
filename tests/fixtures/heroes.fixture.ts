@@ -66,6 +66,7 @@ export const flatWeights = {
   synergy: 1,
   antiSyn: 1,
   archetype: 1,
+  mapArchetype: 1,
 };
 
 export function compFromIds(

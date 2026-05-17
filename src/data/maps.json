@@ -1,21 +1,30 @@
 {
-  "comment": "OW2 map pool with selective map-conditional overrides for matchups and anti-synergy. Overrides REPLACE base values (not additive). Matchup keys are directional 'myId:enemyId'; anti-synergy keys are canonicalized alphabetically (smaller id first). Curated 2026-05-16 for Season 2: Summit. Cross-referenced with Blizzard map docs / playoverwatch / liquipedia / overpicker map guides.",
+  "comment": "OW2 map pool with selective map-conditional overrides. Overrides REPLACE base values (not additive). Matchup keys are directional 'myId:enemyId'; anti-synergy keys are canonicalized alphabetically. bySide.{attack|defense} only applies on escort/hybrid (asymmetric modes) and TAKES PRECEDENCE over the map-level block. archetypePref biases comp scoring by archetype fit (positive = favored, negative = disfavored, typical range ±1.0). Curated 2026-05-17 for Season 2: Summit. Cross-referenced with Blizzard map docs / playoverwatch / liquipedia / mobalytics / overpicker map guides.",
   "modes": ["control", "escort", "hybrid", "push", "flashpoint", "clash"],
   "maps": [
     {
       "id": "antarctic-peninsula",
       "name": "Antarctic Peninsula",
-      "mode": "control"
+      "mode": "control",
+      "overrides": {
+        "archetypePref": { "brawl": 0.6, "poke": -0.3 }
+      }
     },
     {
       "id": "busan",
       "name": "Busan",
-      "mode": "control"
+      "mode": "control",
+      "overrides": {
+        "archetypePref": { "dive": 0.5, "poke": -0.2 }
+      }
     },
     {
       "id": "ilios",
       "name": "Ilios",
-      "mode": "control"
+      "mode": "control",
+      "overrides": {
+        "archetypePref": { "dive": 0.5, "brawl": 0.2, "poke": -0.3 }
+      }
     },
     {
       "id": "lijiang-tower",
@@ -26,7 +35,8 @@
           "winston:ana": 2,
           "ana:winston": -2,
           "tracer:zenyatta": 2
-        }
+        },
+        "archetypePref": { "dive": 0.8, "brawl": -0.4 }
       }
     },
     {
@@ -38,18 +48,25 @@
           "winston:ana": 2,
           "tracer:zenyatta": 2,
           "ana:winston": -2
-        }
+        },
+        "archetypePref": { "dive": 0.7, "brawl": -0.3 }
       }
     },
     {
       "id": "oasis",
       "name": "Oasis",
-      "mode": "control"
+      "mode": "control",
+      "overrides": {
+        "archetypePref": { "brawl": 0.4, "poke": 0.3 }
+      }
     },
     {
       "id": "samoa",
       "name": "Samoa",
-      "mode": "control"
+      "mode": "control",
+      "overrides": {
+        "archetypePref": { "dive": 0.5, "brawl": 0.3 }
+      }
     },
 
     {
@@ -59,7 +76,8 @@
       "overrides": {
         "antiSynergy": {
           "hanzo:widowmaker": 0
-        }
+        },
+        "archetypePref": { "poke": 1.0, "brawl": -0.5 }
       }
     },
     {
@@ -69,7 +87,8 @@
       "overrides": {
         "antiSynergy": {
           "hanzo:widowmaker": 0
-        }
+        },
+        "archetypePref": { "brawl": 0.7, "poke": -0.3 }
       }
     },
     {
@@ -85,6 +104,17 @@
         },
         "antiSynergy": {
           "hanzo:widowmaker": 0
+        },
+        "archetypePref": { "poke": 0.6, "brawl": -0.2 },
+        "bySide": {
+          "defense": {
+            "matchups": {
+              "pharah:cassidy": -2,
+              "pharah:sojourn": -2,
+              "pharah:soldier-76": -1,
+              "pharah:ashe": -2
+            }
+          }
         }
       }
     },
@@ -101,6 +131,19 @@
         },
         "antiSynergy": {
           "hanzo:widowmaker": 0
+        },
+        "archetypePref": { "poke": 0.8, "brawl": -0.3 },
+        "bySide": {
+          "defense": {
+            "matchups": {
+              "pharah:cassidy": -2,
+              "pharah:sojourn": -2,
+              "pharah:soldier-76": -1,
+              "pharah:ashe": -2,
+              "bastion:winston": 2,
+              "bastion:tracer": -1
+            }
+          }
         }
       }
     },
@@ -111,7 +154,8 @@
       "overrides": {
         "antiSynergy": {
           "hanzo:widowmaker": 0
-        }
+        },
+        "archetypePref": { "brawl": 0.6, "poke": -0.3 }
       }
     },
     {
@@ -121,13 +165,17 @@
       "overrides": {
         "antiSynergy": {
           "hanzo:widowmaker": 0
-        }
+        },
+        "archetypePref": { "brawl": 0.7, "poke": -0.3 }
       }
     },
     {
       "id": "shambali",
       "name": "Shambali Monastery",
-      "mode": "escort"
+      "mode": "escort",
+      "overrides": {
+        "archetypePref": { "brawl": 0.5, "dive": 0.2 }
+      }
     },
     {
       "id": "watchpoint-gibraltar",
@@ -136,14 +184,18 @@
       "overrides": {
         "antiSynergy": {
           "hanzo:widowmaker": 0
-        }
+        },
+        "archetypePref": { "brawl": 0.5, "dive": 0.3 }
       }
     },
 
     {
       "id": "blizzard-world",
       "name": "Blizzard World",
-      "mode": "hybrid"
+      "mode": "hybrid",
+      "overrides": {
+        "archetypePref": { "brawl": 0.7, "poke": -0.3 }
+      }
     },
     {
       "id": "eichenwalde",
@@ -153,6 +205,20 @@
         "matchups": {
           "winston:ana": 2,
           "tracer:zenyatta": 2
+        },
+        "archetypePref": { "brawl": 0.9, "poke": -0.5 },
+        "bySide": {
+          "attack": {
+            "archetypePref": { "brawl": 0.6, "dive": 0.3, "poke": -0.4 }
+          },
+          "defense": {
+            "matchups": {
+              "bastion:reinhardt": 2,
+              "bastion:winston": 1,
+              "reaper:reinhardt": 1
+            },
+            "archetypePref": { "brawl": 1.0, "poke": -0.5 }
+          }
         }
       }
     },
@@ -164,6 +230,16 @@
         "matchups": {
           "winston:ana": 2,
           "tracer:zenyatta": 2
+        },
+        "archetypePref": { "brawl": 0.7, "poke": -0.2 },
+        "bySide": {
+          "defense": {
+            "matchups": {
+              "bastion:reinhardt": 2,
+              "reaper:reinhardt": 1
+            },
+            "archetypePref": { "brawl": 0.8, "poke": -0.2 }
+          }
         }
       }
     },
@@ -174,6 +250,19 @@
       "overrides": {
         "matchups": {
           "reinhardt:reaper": 0
+        },
+        "archetypePref": { "brawl": 0.8, "poke": -0.3 },
+        "bySide": {
+          "attack": {
+            "archetypePref": { "brawl": 0.5, "dive": 0.4, "poke": -0.3 }
+          },
+          "defense": {
+            "matchups": {
+              "bastion:reinhardt": 2,
+              "reaper:reinhardt": 1
+            },
+            "archetypePref": { "brawl": 0.9, "poke": -0.3 }
+          }
         }
       }
     },
@@ -184,7 +273,8 @@
       "overrides": {
         "antiSynergy": {
           "hanzo:widowmaker": 0
-        }
+        },
+        "archetypePref": { "poke": 0.6, "brawl": -0.2 }
       }
     },
     {
@@ -195,6 +285,15 @@
         "matchups": {
           "pharah:cassidy": -1,
           "pharah:sojourn": -1
+        },
+        "archetypePref": { "brawl": 0.5, "dive": 0.3 },
+        "bySide": {
+          "defense": {
+            "matchups": {
+              "pharah:cassidy": -2,
+              "pharah:sojourn": -2
+            }
+          }
         }
       }
     },
@@ -207,6 +306,16 @@
           "pharah:cassidy": -1,
           "pharah:sojourn": -1,
           "pharah:ashe": -1
+        },
+        "archetypePref": { "brawl": 0.6, "poke": -0.2 },
+        "bySide": {
+          "defense": {
+            "matchups": {
+              "pharah:cassidy": -2,
+              "pharah:sojourn": -2,
+              "pharah:ashe": -2
+            }
+          }
         }
       }
     },
@@ -214,7 +323,10 @@
     {
       "id": "colosseo",
       "name": "Colosseo",
-      "mode": "push"
+      "mode": "push",
+      "overrides": {
+        "archetypePref": { "brawl": 0.5, "poke": 0.2 }
+      }
     },
     {
       "id": "esperanca",
@@ -223,24 +335,34 @@
       "overrides": {
         "antiSynergy": {
           "hanzo:widowmaker": 0
-        }
+        },
+        "archetypePref": { "poke": 0.5, "brawl": -0.2 }
       }
     },
     {
       "id": "new-queen-street",
       "name": "New Queen Street",
-      "mode": "push"
+      "mode": "push",
+      "overrides": {
+        "archetypePref": { "brawl": 0.6, "poke": -0.2 }
+      }
     },
     {
       "id": "runasapi",
       "name": "Runasapi",
-      "mode": "push"
+      "mode": "push",
+      "overrides": {
+        "archetypePref": { "poke": 0.4, "brawl": 0.3 }
+      }
     },
 
     {
       "id": "aatlis",
       "name": "Aatlis",
-      "mode": "flashpoint"
+      "mode": "flashpoint",
+      "overrides": {
+        "archetypePref": { "dive": 0.5, "brawl": -0.2 }
+      }
     },
     {
       "id": "new-junk-city",
@@ -251,19 +373,26 @@
           "pharah:cassidy": -1,
           "pharah:sojourn": -1,
           "pharah:soldier-76": 0
-        }
+        },
+        "archetypePref": { "dive": 0.5, "poke": 0.2, "brawl": -0.3 }
       }
     },
     {
       "id": "suravasa",
       "name": "Suravasa",
-      "mode": "flashpoint"
+      "mode": "flashpoint",
+      "overrides": {
+        "archetypePref": { "dive": 0.4, "brawl": 0.3 }
+      }
     },
 
     {
       "id": "hanaoka",
       "name": "Hanaoka",
-      "mode": "clash"
+      "mode": "clash",
+      "overrides": {
+        "archetypePref": { "brawl": 0.6, "poke": -0.2 }
+      }
     },
     {
       "id": "throne-of-anubis",
@@ -272,7 +401,8 @@
       "overrides": {
         "antiSynergy": {
           "hanzo:widowmaker": 0
-        }
+        },
+        "archetypePref": { "poke": 0.5, "brawl": -0.2 }
       }
     }
   ]

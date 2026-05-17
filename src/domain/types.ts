@@ -17,8 +17,11 @@ export interface Comp {
   support: [string, string];
 }
 
+export type Side = 'attack' | 'defense';
+
 export interface MatchupCtx {
   mapId?: string;
+  side?: Side;
   bans: string[];
 }
 
@@ -27,6 +30,7 @@ export interface Weights {
   synergy: number;
   antiSyn: number;
   archetype: number;
+  mapArchetype: number;
 }
 
 export type TermKind = 'pair' | 'synergy' | 'antiSyn' | 'archetype';
@@ -51,12 +55,19 @@ export interface Suggestion {
 
 export type MapMode = 'control' | 'escort' | 'hybrid' | 'push' | 'flashpoint' | 'clash';
 
+export const ASYMMETRIC_MODES: ReadonlySet<MapMode> = new Set(['escort', 'hybrid']);
+
+export interface MapOverrideBlock {
+  matchups?: Record<string, number>;
+  antiSynergy?: Record<string, number>;
+  archetypePref?: Partial<Record<Archetype, number>>;
+}
+
 export interface MapDef {
   id: string;
   name: string;
   mode: MapMode;
-  overrides?: {
-    matchups?: Record<string, number>;
-    antiSynergy?: Record<string, number>;
+  overrides?: MapOverrideBlock & {
+    bySide?: Partial<Record<Side, MapOverrideBlock>>;
   };
 }
