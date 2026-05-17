@@ -50,11 +50,23 @@ function clearAll() {
 <template>
   <details class="group relative">
     <summary
-      class="list-none [&::-webkit-details-marker]:hidden flex items-center gap-2 text-xs text-slate-300 px-3 py-1.5 rounded-md border border-slate-700/60 bg-slate-base/60 cursor-pointer select-none hover:border-slate-500 group-open:border-ow-orange/60 group-open:text-slate-100 transition"
+      class="list-none [&::-webkit-details-marker]:hidden pill cursor-pointer group-open:pill-active"
       aria-label="Bans"
     >
+      <svg
+        class="w-3.5 h-3.5 text-slate-400"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17ZM4 10a6 6 0 0 1 9.74-4.7L5.3 13.74A5.97 5.97 0 0 1 4 10Zm6 6a5.97 5.97 0 0 1-3.74-1.3l8.44-8.44A6 6 0 0 1 10 16Z"
+          clip-rule="evenodd"
+        />
+      </svg>
       <span class="font-semibold">Bans</span>
-      <span class="text-slate-400">({{ modelValue.length }}/{{ MAX_BANS }})</span>
+      <span class="text-slate-400 tabular-nums">{{ modelValue.length }}/{{ MAX_BANS }}</span>
       <span
         class="ml-1 text-slate-500 transition-transform group-open:rotate-180"
         aria-hidden="true"
@@ -67,13 +79,13 @@ function clearAll() {
       aria-label="Bans picker"
     >
       <div class="flex items-center justify-between gap-3">
-        <div class="text-xs panel-title">
+        <div class="panel-title">
           Selected ({{ modelValue.length }}/{{ MAX_BANS }})
         </div>
         <button
           v-if="modelValue.length > 0"
           type="button"
-          class="text-xs text-slate-400 hover:text-ow-orange focus:outline-none focus:text-ow-orange"
+          class="text-xs text-slate-400 hover:text-ow-orange focus:outline-none focus:text-ow-orange transition"
           @click="clearAll"
         >
           Clear bans
@@ -91,7 +103,7 @@ function clearAll() {
           v-for="h in selectedHeroes"
           :key="h.id"
           type="button"
-          class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-base/70 border border-slate-700/60 text-xs text-slate-100 hover:border-red-500 hover:text-red-300 focus:outline-none focus:ring-2 focus:ring-ow-orange"
+          class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-quiet/70 border border-slate-700/60 text-xs text-slate-100 hover:border-red-500 hover:text-red-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-ow-orange transition"
           :title="`Remove ban: ${h.name}`"
           @click="removeBan(h.id)"
         >

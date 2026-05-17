@@ -123,8 +123,8 @@ function setSide(side: Side | null) {
 <template>
   <div class="flex items-center gap-2 flex-wrap">
     <label
-      class="flex items-center gap-2 text-xs text-slate-300 px-3 py-1.5 rounded-md border border-slate-700/60 bg-slate-base/60 cursor-pointer hover:border-slate-500 transition select-none"
-      :class="modelValue.enabled ? 'border-ow-orange/60 text-slate-100' : ''"
+      class="pill cursor-pointer"
+      :class="modelValue.enabled ? 'pill-active' : ''"
     >
       <input
         type="checkbox"
@@ -132,8 +132,20 @@ function setSide(side: Side | null) {
         :checked="modelValue.enabled"
         @change="onToggle"
       />
-      <span class="font-semibold">Map context</span>
-      <span v-if="selectedMap" class="text-slate-400">
+      <svg
+        class="w-3.5 h-3.5 text-slate-400"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 2a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6Zm0 8.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <span class="font-semibold">Map</span>
+      <span v-if="selectedMap" class="text-slate-300">
         · {{ selectedMap.name }}<template v-if="modelValue.side">
           · {{ modelValue.side === 'attack' ? 'Attack' : 'Defense' }}
         </template>
@@ -142,7 +154,7 @@ function setSide(side: Side | null) {
 
     <template v-if="modelValue.enabled">
       <select
-        class="text-xs bg-slate-base/60 border border-slate-700/60 rounded-md px-2 py-1.5 text-slate-100 focus:outline-none focus:ring-2 focus:ring-ow-orange/60"
+        class="text-xs bg-slate-quiet/60 border border-slate-700/60 rounded-md px-2 py-1.5 text-slate-100 focus-visible:ring-2 focus-visible:ring-ow-orange/60 hover:border-slate-500 transition"
         aria-label="Mode"
         :value="currentMode ?? ''"
         @change="onModeChange"
@@ -153,7 +165,7 @@ function setSide(side: Side | null) {
         </option>
       </select>
       <select
-        class="text-xs bg-slate-base/60 border border-slate-700/60 rounded-md px-2 py-1.5 text-slate-100 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-ow-orange/60"
+        class="text-xs bg-slate-quiet/60 border border-slate-700/60 rounded-md px-2 py-1.5 text-slate-100 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-ow-orange/60 hover:border-slate-500 transition"
         aria-label="Map"
         :value="modelValue.mapId ?? ''"
         :disabled="!currentMode"
@@ -166,13 +178,13 @@ function setSide(side: Side | null) {
       </select>
       <div
         v-if="supportsSide"
-        class="flex items-center text-xs rounded-md border border-slate-700/60 bg-slate-base/60 overflow-hidden"
+        class="flex items-center text-xs rounded-md border border-slate-700/60 bg-slate-quiet/60 overflow-hidden"
         role="group"
         aria-label="Side"
       >
         <button
           type="button"
-          class="px-2.5 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-ow-orange/60"
+          class="px-2.5 py-1.5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-ow-orange/60"
           :class="modelValue.side === null ? 'bg-slate-700/60 text-slate-100' : 'text-slate-400 hover:text-slate-200'"
           :aria-pressed="modelValue.side === null"
           title="Any side"
@@ -182,7 +194,7 @@ function setSide(side: Side | null) {
         </button>
         <button
           type="button"
-          class="px-2.5 py-1.5 border-l border-slate-700/60 transition focus:outline-none focus:ring-2 focus:ring-ow-orange/60"
+          class="px-2.5 py-1.5 border-l border-slate-700/60 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-ow-orange/60"
           :class="modelValue.side === 'attack' ? 'bg-ow-orange/30 text-slate-100' : 'text-slate-400 hover:text-slate-200'"
           :aria-pressed="modelValue.side === 'attack'"
           @click="setSide('attack')"
@@ -191,7 +203,7 @@ function setSide(side: Side | null) {
         </button>
         <button
           type="button"
-          class="px-2.5 py-1.5 border-l border-slate-700/60 transition focus:outline-none focus:ring-2 focus:ring-ow-orange/60"
+          class="px-2.5 py-1.5 border-l border-slate-700/60 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-ow-orange/60"
           :class="modelValue.side === 'defense' ? 'bg-ow-orange/30 text-slate-100' : 'text-slate-400 hover:text-slate-200'"
           :aria-pressed="modelValue.side === 'defense'"
           @click="setSide('defense')"

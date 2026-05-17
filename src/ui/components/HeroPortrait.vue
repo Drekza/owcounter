@@ -23,9 +23,9 @@ const portraitUrl = computed(() => {
 const initials = computed(() => props.hero.name.slice(0, 2).toUpperCase());
 
 const roleBorder: Record<Role, string> = {
-  tank: 'border-blue-500',
-  dps: 'border-red-500',
-  support: 'border-green-500',
+  tank: 'border-role-tank/80',
+  dps: 'border-role-dps/80',
+  support: 'border-role-support/80',
 };
 
 const roleBg: Record<Role, string> = {
@@ -47,13 +47,13 @@ function onClick() {
     :aria-label="hero.name"
     :aria-pressed="selected || false"
     :disabled="disabled"
-    class="group relative w-20 h-20 rounded-md overflow-hidden border-2 transition-transform"
+    class="group relative w-20 h-20 rounded-md overflow-hidden border-2 transition-all duration-150"
     :class="[
       roleBorder[hero.role],
       disabled
-        ? 'opacity-40 pointer-events-none'
-        : 'hover:scale-105 hover:ring-2 hover:ring-ow-orange focus:outline-none focus:ring-2 focus:ring-ow-orange',
-      selected ? 'ring-2 ring-ow-orange' : '',
+        ? 'opacity-40 grayscale pointer-events-none'
+        : 'hover:scale-[1.06] hover:ring-2 hover:ring-ow-orange hover:z-10 hover:shadow-glow-orange focus:outline-none focus-visible:ring-2 focus-visible:ring-ow-orange',
+      selected ? 'ring-2 ring-ow-orange shadow-glow-orange' : '',
     ]"
     @click="onClick"
   >
@@ -72,6 +72,12 @@ function onClick() {
     >
       {{ initials }}
     </div>
+
+    <span
+      class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/60 to-transparent text-[10px] py-1 px-1.5 text-slate-100 font-medium text-center truncate opacity-0 group-hover:opacity-100 transition-opacity"
+    >
+      {{ hero.name }}
+    </span>
 
     <span
       v-if="selected"

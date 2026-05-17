@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import Header from './ui/components/Header.vue';
 import ControlsBar from './ui/components/ControlsBar.vue';
 import TeamPicker from './ui/components/TeamPicker.vue';
 import EnemyCompPanel from './ui/components/EnemyCompPanel.vue';
+import MapBriefPanel from './ui/components/MapBriefPanel.vue';
 import SuggestionCard from './ui/components/SuggestionCard.vue';
 import type { ArchVec, Comp } from './domain/types';
 import {
   compArchetypeProfile,
   keyThreats as computeKeyThreats,
 } from './domain/archetypes';
-import { heroes, heroesById, maps, matchups, patch, updated } from './data';
+import { heroes, heroesById, maps, mapsById, matchups, patch, updated } from './data';
 import { useAppState } from './state/useAppState';
 
 const {
@@ -27,6 +28,8 @@ const {
   resetAll,
 } = useAppState();
 
+const myPickerOpen = ref(false);
+
 const hasAnyData = computed(
   () =>
     myPickIds.value.length > 0 ||
@@ -42,6 +45,7 @@ function handleResetAll() {
     return;
   }
   resetAll();
+  myPickerOpen.value = false;
 }
 
 const EMPTY_COMP: Comp = {
@@ -97,6 +101,18 @@ const suggestionPanelLabel = computed(() =>
   enemyComp.value ? 'Suggested counters' : 'Suggested comps',
 );
 
+const selectedMap = computed(() =>
+  mapCtx.value.enabled && mapCtx.value.mapId
+    ? mapsById.get(mapCtx.value.mapId) ?? null
+    : null,
+);
+
+const maxSuggestionScore = computed(() => {
+  if (suggestions.value.length === 0) return 1;
+  const top = suggestions.value[0].score;
+  return Math.max(1, top);
+});
+
 const patchLabel = computed(() => patch || 'Data: pending');
 const updatedLabel = computed(() => (updated ? `Updated ${updated}` : 'Updated â€”'));
 </script>
@@ -112,36 +128,82 @@ const updatedLabel = computed(() => (updated ? `Updated ${updated}` : 'Updated â
       />
       <button
         type="button"
-        class="px-3 py-1.5 text-xs uppercase tracking-wider rounded-md border border-red-500/50 text-red-200 hover:bg-red-600/30 hover:border-red-400 disabled:opacity-40 disabled:cursor-not-allowed transition focus:outline-none focus:ring-2 focus:ring-ow-orange"
+        class="icon-btn"
+        :class="hasAnyData ? 'hover:text-red-300 hover:border-red-500/40' : ''"
         :disabled="!hasAnyData"
-        :title="hasAnyData ? 'Clear picks, bans, and map' : 'Nothing to reset'"
+        :title="hasAnyData ? 'Reset all picks, bans, and map' : 'Nothing to reset'"
+        :aria-label="hasAnyData ? 'Reset all' : 'Nothing to reset'"
         @click="handleResetAll"
       >
-        Reset all
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3.5 10a6.5 6.5 0 1 1 1.95 4.64" />
+          <path d="M3 14.5V10h4.5" />
+        </svg>
       </button>
     </template>
   </Header>
 
-  <main class="flex-1 px-6 py-5 grid gap-5 grid-cols-1 xl:grid-cols-[minmax(0,1fr)_360px]">
+  <main class="flex-1 px-6 py-5 grid gap-5 grid-cols-1 xl:grid-cols-[minmax(0,1fr)_380px]">
     <div class="flex flex-col gap-5 min-w-0">
-      <section class="panel p-5 flex flex-col gap-4" aria-label="My team locked picks">
+      <section
+        class="panel-quiet px-5 py-3 flex flex-col gap-3"
+        aria-label="My team locked picks"
+      >
         <TeamPicker
           v-model="myPicks"
           :heroes="heroes"
           :bans="bans"
-          :label="`My Team â€” locked picks${myPicksCount ? ` (${myPicksCount}/5)` : ''}`"
-        />
+          :picker-visible="myPickerOpen"
+          :label="`Locked picks Â· optional${myPicksCount ? ` (${myPicksCount}/5)` : ''}`"
+        >
+          <template #header-actions>
+            <button
+              type="button"
+              class="text-xs text-slate-300 hover:text-ow-orange transition focus-visible:ring-2 focus-visible:ring-ow-orange/70 rounded px-2 py-1"
+              :aria-expanded="myPickerOpen"
+              @click="myPickerOpen = !myPickerOpen"
+            >
+              {{ myPickerOpen ? 'Hide picker' : myPicksCount ? 'Edit picks' : 'Add picks' }}
+            </button>
+          </template>
+        </TeamPicker>
       </section>
 
-      <section class="panel p-5 flex flex-col gap-4" aria-label="Enemy team">
+      <section
+        class="panel-elevated p-5 flex flex-col gap-4"
+        aria-label="Enemy team"
+      >
         <div
           v-if="banConflicts.length"
-          class="rounded-md border border-red-500/60 bg-red-900/30 px-3 py-2 text-xs text-red-100"
+          class="rounded-md border border-red-500/60 bg-red-900/30 px-3 py-2 text-xs text-red-100 flex items-start gap-2"
           role="alert"
         >
-          Banned hero{{ banConflicts.length > 1 ? 'es' : '' }} in a slot:
-          <span class="font-semibold">{{ banConflictNames }}</span
-          >. Clear the slot or unban.
+          <svg
+            class="w-4 h-4 mt-0.5 flex-shrink-0 text-red-300"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M9.4 2.6a1 1 0 0 1 1.2 0l7 5a1 1 0 0 1 .4.8v6a1 1 0 0 1-.4.8l-7 5a1 1 0 0 1-1.2 0l-7-5a1 1 0 0 1-.4-.8v-6a1 1 0 0 1 .4-.8l7-5ZM10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 6Zm0 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span>
+            Banned hero{{ banConflicts.length > 1 ? 'es' : '' }} in a slot:
+            <span class="font-semibold">{{ banConflictNames }}</span
+            >. Clear the slot or unban.
+          </span>
         </div>
         <TeamPicker
           v-model="enemy"
@@ -158,6 +220,14 @@ const updatedLabel = computed(() => (updated ? `Updated ${updated}` : 'Updated â
           :enemy="enemyCompOrEmpty"
           :archetype-profile="enemyArchetypeProfile"
           :key-threats="enemyKeyThreats"
+          :heroes-by-id="heroesById"
+        />
+      </section>
+
+      <section v-if="selectedMap" class="panel p-5" aria-label="Map brief">
+        <MapBriefPanel
+          :map="selectedMap"
+          :side="mapCtx.side"
           :heroes-by-id="heroesById"
         />
       </section>
@@ -217,6 +287,7 @@ const updatedLabel = computed(() => (updated ? `Updated ${updated}` : 'Updated â
             :heroes-by-id="heroesById"
             :reasoning="reasonings[i] ?? { strong: [], weak: [] }"
             :locked-ids="lockedIdSet"
+            :max-score="maxSuggestionScore"
           />
         </div>
       </section>
@@ -224,9 +295,12 @@ const updatedLabel = computed(() => (updated ? `Updated ${updated}` : 'Updated â
   </main>
 
   <footer
-    class="px-6 py-3 border-t border-slate-700/60 bg-slate-panel/40 text-xs text-slate-500 flex items-center justify-between"
+    class="px-6 py-3 border-t border-slate-800/80 bg-slate-quiet/40 text-[11px] text-slate-500 flex items-center justify-between"
   >
-    <span>{{ patchLabel }}</span>
+    <span class="inline-flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-ow-orange/70" aria-hidden="true" />
+      {{ patchLabel }}
+    </span>
     <span>{{ updatedLabel }}</span>
   </footer>
 </template>

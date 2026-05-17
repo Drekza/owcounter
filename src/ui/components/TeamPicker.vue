@@ -18,12 +18,16 @@ import type { Hero, Role } from '../../domain/types';
 import HeroGrid from './HeroGrid.vue';
 import SlotChip from './SlotChip.vue';
 
-const props = defineProps<{
-  heroes: Hero[];
-  bans: string[];
-  label: string;
-  modelValue: TeamState;
-}>();
+const props = withDefaults(
+  defineProps<{
+    heroes: Hero[];
+    bans: string[];
+    label: string;
+    modelValue: TeamState;
+    pickerVisible?: boolean;
+  }>(),
+  { pickerVisible: true },
+);
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: TeamState): void;
@@ -110,19 +114,25 @@ const ownPickedIds = computed(() =>
     .map((s) => s.heroId)
     .filter((x): x is string => x !== null),
 );
+
+const hasAnyPick = computed(() => ownPickedIds.value.length > 0);
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <div class="flex items-center justify-between">
+  <div class="flex flex-col gap-3">
+    <div class="flex items-center justify-between gap-2">
       <h2 class="panel-title">{{ label }}</h2>
-      <button
-        type="button"
-        class="text-xs text-slate-400 hover:text-ow-orange transition focus:outline-none focus:text-ow-orange"
-        @click="reset"
-      >
-        Reset
-      </button>
+      <div class="flex items-center gap-1">
+        <slot name="header-actions" />
+        <button
+          v-if="hasAnyPick"
+          type="button"
+          class="text-xs text-slate-400 hover:text-ow-orange transition focus-visible:ring-2 focus-visible:ring-ow-orange/70 rounded px-2 py-1"
+          @click="reset"
+        >
+          Reset
+        </button>
+      </div>
     </div>
 
     <div class="flex flex-wrap gap-2">
@@ -137,6 +147,7 @@ const ownPickedIds = computed(() =>
     </div>
 
     <HeroGrid
+      v-if="pickerVisible"
       :heroes="heroes"
       :disabled-ids="bans"
       :selected-ids="ownPickedIds"
